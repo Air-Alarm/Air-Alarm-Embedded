@@ -20,7 +20,6 @@ def Slicing(read):
 
     for i in range(0,len(read)): #시간 넣기
 
-
         if chr(read[i]) == "W":
             Time = Time + chr(read[i + 2])
             Time = Time + chr(read[i + 3])
@@ -41,7 +40,6 @@ def Slicing(read):
             if chr(read[i + 5]) != ",":  # 습도가 10 이하(문자열 3자리)인 경우를 대비
                 Humi = Humi + chr(read[i + 5])
 
-
         if chr(read[i]) == "D":  # 먼지 넣기 한자리수면 하나 두자릿수면 둘 세자리수면 셋...
             Dust = Dust + chr(read[i + 2])
             if chr(read[i + 3]) != ",":
@@ -58,16 +56,12 @@ def Slicing(read):
             if chr(read[i + 5]) != ",":
                 Co2 = Co2 + chr(read[i + 5])
 
-
     #여기까지 오면 각 변수에 삽입 완료상태
     print("Time: ",Time)
     print("Temp: ", Temp)
     print("Humi: ", Humi)
     print("Dust: ", Dust)
     print("Co2: ",Co2)
-
-
-
 
 
 while(True):

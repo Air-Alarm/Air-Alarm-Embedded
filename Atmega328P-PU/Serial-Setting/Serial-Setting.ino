@@ -1,20 +1,34 @@
+int time = 0;
 void setup() {
   Serial.begin(9600);
+  
 }
 
 //W:시간 T:온도 H:습도 D:먼지 C:Co2
 void loop() {
-  Serial.println("W:1201,T:11.5,H:41.5,D:51,C:501,");
-  delay(1000);
-  Serial.println("W:1202,T:12.5,H:42.5,D:52,C:502,");
-  delay(1000);
-  Serial.println("W:1203,T:13.5,H:43.5,D:53,C:503,");
-  delay(1000);
-  Serial.println("W:1204,T:14.5,H:44.5,D:54,C:504,");
-  delay(1000);
-  Serial.println("W:1205,T:15.5,H:45.5,D:55,C:505,");
-  delay(1000);
-  Serial.println("W:1206,T:16.5,H:46.5,D:56,C:506,");
-  delay(1000);
+  if (time % 100 == 60) {
+    time += 100;
+    time -= 60;
+  }
+  if (time > 2359) {
+    time = 0;
+  }
+
+  
+  Serial.print("W:");
+  if (time < 10){
+    Serial.print("000");
+  }
+  else if(time < 100){
+    Serial.print("00");
+  }
+  else if(time < 1000){
+    Serial.print("0");
+  }
+
+  Serial.print(time);
+  Serial.println(",T:11.5,H:41.5,D:51,C:501,");
+  delay(10000);
+  time = time+1;
 
 }
