@@ -13,6 +13,7 @@ E |   | C
   This example code is in the public domain.
  */
 #include "DHT.h"
+#include <MsTimer2.h>
 #define DHTPIN A0 
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
@@ -27,13 +28,18 @@ int D1 = 9;
 int D2 = 10;
 int D3 = 11;
 int D4 = 12;
-
+int input;
+int loopcount = 0;
+float h;
+float t;
+char addr[4] = {0,0,0,0};
+volatile boolean state = true;
 // the setup routine runs once when you press reset:
 void setup() {
   Serial.begin(9600);
   Serial.println("DHTxx test!");
   dht.begin();
-                  
+  
   // initialize the digital pins as outputs.
   pinMode(pinA, OUTPUT);     
   pinMode(pinB, OUTPUT);     
@@ -46,6 +52,8 @@ void setup() {
   pinMode(D2, OUTPUT);  
   pinMode(D3, OUTPUT);  
   pinMode(D4, OUTPUT);  
+  MsTimer2::set(2, Segmentpush);
+  MsTimer2::start();
 }
 
 void Segment(char SegmentPin,char PrintNumx16){
@@ -181,43 +189,39 @@ void Segment(char SegmentPin,char PrintNumx16){
 
   }
 }
-int input;
-int loopcount = 0;
+
+int i = 0;
+void Segmentpush(){
+  Segment(i+1,addr[i]);
+  i++;
+  if (i==4){
+    i = 0;
+  }
+}
+
+
+
 // the loop routine runs over and over again forever:
 void loop() {
-  float h;
-  float t;
-  if (loopcount % 100 == 0){
-    h = 23.1;//dht.readHumidity();// 습도를 측정합니다.
-    t = 23.1;//dht.readTemperature();// 온도를 측정합니다.
-//    Serial.print("H: ");
-//    Serial.print(h);
-//    Serial.print("/");
-//    Serial.print("T: ");
-//    Serial.print(t);
-//    Serial.println(" *C ");
-  }
-
   
 
-  char addr[4] = {0,0,0,0};
+
+  h = dht.readHumidity();// 습도를 측정합니다.
+  t = dht.readTemperature();// 온도를 측정합니다.
+  Serial.print("H: ");
+  Serial.print(h);
+  Serial.print("/");
+  Serial.print("T: ");
+  Serial.print(t);
+  Serial.println(" *C ");
   input = t*10;
-  
-  
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
- 
-  //0
-  Segment(1,addr[0]);
-  delay(1);
-  Segment(2,addr[1]);
-  delay(1);
-  Segment(3,addr[2]);
-  delay(1);
-  Segment(4,addr[3]);
-  delay(1);
-  loopcount++;
+  delay(2000);
+
+  
+
 
 }
