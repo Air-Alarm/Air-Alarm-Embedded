@@ -118,14 +118,14 @@ void Segment(char SegmentNumx16, char PrintNumx16){
   if(PrintNumx16 & 0x01){
     digitalWrite(2, 1);
   } else {
-    digitalWrite(2,0);
+    digitalWrite(2, 0);
   }
   
 }
 
 int i = 0;
 void Segmentpush(){
-  Segment(List_Of_Segments[i+1], List_Of_Segment_Info[addr[i]]);
+  Segment(List_Of_Segments[i], List_Of_Segment_Info[addr[i]]);
   i++;
   if (i==4){
     i = 0;
@@ -139,15 +139,15 @@ void loop() {
   
 
 
-//  h = dht.readHumidity();// 습도를 측정합니다.
-//  t = dht.readTemperature();// 온도를 측정합니다.
-//  Serial.print("H: ");
-//  Serial.print(h);
-//  Serial.print("/");
-//  Serial.print("T: ");
-//  Serial.print(t);
-//  Serial.println(" *C ");
-  int t = 123;
+  h = dht.readHumidity();// 습도를 측정합니다.
+  t = dht.readTemperature();// 온도를 측정합니다.
+  Serial.print("H: ");
+  Serial.print(h);
+  Serial.print("/");
+  Serial.print("T: ");
+  Serial.print(t);
+  Serial.println(" *C ");
+  
   input = t*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
