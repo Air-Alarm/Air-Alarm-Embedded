@@ -33,6 +33,9 @@ int loopcount = 0;
 float h;
 float t;
 char addr[4] = {0,0,0,0};
+
+char List_Of_Segments[4] = { 0x01, 0x02, 0x04, 0x08 };
+char List_Of_Segment_Info[10] = { 0xC0, 0xF9, 0xA4, 0xB0, 0x99, 0x92, 0x82, 0xD8, 0x80, 0x98 };
 volatile boolean state = true;
 // the setup routine runs once when you press reset:
 void setup() {
@@ -41,158 +44,88 @@ void setup() {
   dht.begin();
   
   // initialize the digital pins as outputs.
-  pinMode(pinA, OUTPUT);     
-  pinMode(pinB, OUTPUT);     
-  pinMode(pinC, OUTPUT);     
-  pinMode(pinD, OUTPUT);     
-  pinMode(pinE, OUTPUT);     
-  pinMode(pinF, OUTPUT);     
-  pinMode(pinG, OUTPUT);   
-  pinMode(D1, OUTPUT);  
-  pinMode(D2, OUTPUT);  
-  pinMode(D3, OUTPUT);  
-  pinMode(D4, OUTPUT);  
+
+  for (int i = 2; i < 13; i++){
+    pinMode(i, OUTPUT); 
+  } 
   MsTimer2::set(2, Segmentpush);
   MsTimer2::start();
 }
 
-void Segment(char SegmentPin,char PrintNumx16){
-  if(SegmentPin == 1){
-    digitalWrite(D1, HIGH);
-    digitalWrite(D2, LOW);
-    digitalWrite(D3, LOW);
-    digitalWrite(D4, LOW);
+void Segment(char SegmentNumx16, char PrintNumx16){
+  if(SegmentNumx16 & 0x08){
+    digitalWrite(12,1);
+  } else {
+    digitalWrite(12,0);
   }
-  if(SegmentPin == 2){
-    digitalWrite(D1, LOW);
-    digitalWrite(D2, HIGH);
-    digitalWrite(D3, LOW);
-    digitalWrite(D4, LOW);
+
+  if(SegmentNumx16 & 0x04){
+    digitalWrite(11,1);
+  } else {
+    digitalWrite(11,0);
   }
-  if(SegmentPin == 3){
-    digitalWrite(D1, LOW);
-    digitalWrite(D2, LOW);
-    digitalWrite(D3, HIGH);
-    digitalWrite(D4, LOW);
+
+  if(SegmentNumx16 & 0x02){
+    digitalWrite(10,1);
+  } else {
+    digitalWrite(10,0);
   }
-  if(SegmentPin == 4){
-    digitalWrite(D1, LOW);
-    digitalWrite(D2, LOW);
-    digitalWrite(D3, LOW);
-    digitalWrite(D4, HIGH);
+
+  if(SegmentNumx16 & 0x01){
+    digitalWrite(9,1);
+  } else {
+    digitalWrite(9,0);
+  }
+
+/////////////////////////////////
+
+  if(PrintNumx16 & 0x40){
+    digitalWrite(8, 1);
+  } else {
+    digitalWrite(8,0);
+  }
+
+  if(PrintNumx16 & 0x20){
+    digitalWrite(7, 1);
+  } else {
+    digitalWrite(7,0);
+  }  
+
+  if(PrintNumx16 & 0x10){
+    digitalWrite(6, 1);
+  } else {
+    digitalWrite(6,0);
   }
   
-  if(PrintNumx16  == 0){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, LOW);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, HIGH); 
-
+  if(PrintNumx16 & 0x08){
+    digitalWrite(5, 1);
+  } else {
+    digitalWrite(5,0);
   }
 
-    if(PrintNumx16  == 1){
-    digitalWrite(pinA, HIGH);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, HIGH);   
-    digitalWrite(pinE, HIGH);   
-    digitalWrite(pinF, HIGH);   
-    digitalWrite(pinG, HIGH); 
-
+  if(PrintNumx16 & 0x04){
+    digitalWrite(4, 1);
+  } else {
+    digitalWrite(4,0);
   }
 
-  if(PrintNumx16  == 2){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, HIGH);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, LOW);   
-    digitalWrite(pinF, HIGH);   
-    digitalWrite(pinG, LOW); 
-
-  }
-  if(PrintNumx16  == 3){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, HIGH);   
-    digitalWrite(pinF, HIGH);   
-    digitalWrite(pinG, LOW); 
-
+  if(PrintNumx16 & 0x02){
+    digitalWrite(3, 1);
+  } else {
+    digitalWrite(3,0);
   }
 
-  if(PrintNumx16  == 4){
-    digitalWrite(pinA, HIGH);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, HIGH);   
-    digitalWrite(pinE, HIGH);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, LOW); 
- 
+  if(PrintNumx16 & 0x01){
+    digitalWrite(2, 1);
+  } else {
+    digitalWrite(2,0);
   }
-  if(PrintNumx16  == 5){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, HIGH);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, HIGH);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, LOW); 
-
-  }
-
-  if(PrintNumx16  == 6){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, HIGH);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, LOW);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, LOW); 
- 
-  }
-  if(PrintNumx16  == 7){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, HIGH);   
-    digitalWrite(pinE, HIGH);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, HIGH); 
-
-  }
-
-  if(PrintNumx16  == 8){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, LOW);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, LOW); 
-
-  }
-
-  if(PrintNumx16  == 9){
-    digitalWrite(pinA, LOW);   
-    digitalWrite(pinB, LOW);   
-    digitalWrite(pinC, LOW);   
-    digitalWrite(pinD, LOW);   
-    digitalWrite(pinE, HIGH);   
-    digitalWrite(pinF, LOW);   
-    digitalWrite(pinG, LOW); 
-
-  }
+  
 }
 
 int i = 0;
 void Segmentpush(){
-  Segment(i+1,addr[i]);
+  Segment(List_Of_Segments[i+1], List_Of_Segment_Info[addr[i]]);
   i++;
   if (i==4){
     i = 0;
@@ -206,14 +139,15 @@ void loop() {
   
 
 
-  h = dht.readHumidity();// 습도를 측정합니다.
-  t = dht.readTemperature();// 온도를 측정합니다.
-  Serial.print("H: ");
-  Serial.print(h);
-  Serial.print("/");
-  Serial.print("T: ");
-  Serial.print(t);
-  Serial.println(" *C ");
+//  h = dht.readHumidity();// 습도를 측정합니다.
+//  t = dht.readTemperature();// 온도를 측정합니다.
+//  Serial.print("H: ");
+//  Serial.print(h);
+//  Serial.print("/");
+//  Serial.print("T: ");
+//  Serial.print(t);
+//  Serial.println(" *C ");
+  int t = 123;
   input = t*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
