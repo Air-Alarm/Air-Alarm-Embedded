@@ -10,6 +10,27 @@ E |   | C
   |   |
    ---
     D
+int pinA = 2;
+int pinB = 3;
+int pinC = 4;
+int pinD = 5;
+int pinE = 6;
+int pinF = 7;
+int pinG = 8;
+int D1 = 9;
+int D2 = 10;
+int D3 = 11;
+int D4 = 12;int pinA = 2;
+int pinB = 3;
+int pinC = 4;
+int pinD = 5;
+int pinE = 6;
+int pinF = 7;
+int pinG = 8;
+int D1 = 9;
+int D2 = 10;
+int D3 = 11;
+int D4 = 12;
   This example code is in the public domain.
  */
 #include "DHT.h"
@@ -17,6 +38,7 @@ E |   | C
 #define DHTPIN A0 
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
+
 int input;
 int loopcount = 0;
 float h;
