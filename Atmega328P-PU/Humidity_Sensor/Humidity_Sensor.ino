@@ -10,13 +10,7 @@ E |   | C
   |   |
    ---
     D
-  This example code is in the public domain.
- */
-#include "DHT.h"
-#include <MsTimer2.h>
-#define DHTPIN A0 
-#define DHTTYPE DHT11
-DHT dht(DHTPIN, DHTTYPE);
+
 int pinA = 2;
 int pinB = 3;
 int pinC = 4;
@@ -27,11 +21,28 @@ int pinG = 8;
 int D1 = 9;
 int D2 = 10;
 int D3 = 11;
+int D4 = 12;int pinA = 2;
+int pinB = 3;
+int pinC = 4;
+int pinD = 5;
+int pinE = 6;
+int pinF = 7;
+int pinG = 8;
+int D1 = 9;
+int D2 = 10;
+int D3 = 11;
 int D4 = 12;
+  This example code is in the public domain.
+ */
+#include "DHT.h"
+#include <MsTimer2.h>
+#define DHTPIN A0 
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
 int input;
 int loopcount = 0;
 float h;
-float t;
 char addr[4] = {0,0,0,0};
 
 char List_Of_Segments[4] = { 0x01, 0x02, 0x04, 0x08 };
@@ -140,7 +151,6 @@ void loop() {
 
 
   h = dht.readHumidity();// 습도를 측정합니다.
-  t = dht.readTemperature();// 온도를 측정합니다.
   Serial.print("H: ");
   Serial.print(h);
   Serial.print("/");
