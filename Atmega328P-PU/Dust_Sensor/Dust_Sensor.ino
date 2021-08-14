@@ -125,8 +125,9 @@ void loop() {
 //  else{
 //    ugm3 = oldugm3;
 //  }
- 
-  input = ugm3;
+  if (ugm3 > 1){
+    input = ugm3;
+  }
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
   addr[2] = input % 100 / 10;
