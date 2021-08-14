@@ -154,10 +154,7 @@ void loop() {
   Serial.print("H: ");
   Serial.print(h);
   Serial.print("/");
-  Serial.print("T: ");
-  Serial.print(t);
-  Serial.println(" *C ");
-  
+
   input = h*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
