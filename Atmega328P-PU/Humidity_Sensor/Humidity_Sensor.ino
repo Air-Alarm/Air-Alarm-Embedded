@@ -1,6 +1,4 @@
 /*
-  Showing number 0-9 on a Common Anode 7-segment LED display
-  Displays the numbers 0-9 on the display, with one second inbetween.
     A
    ---
 F |   | B
@@ -32,7 +30,6 @@ int D1 = 9;
 int D2 = 10;
 int D3 = 11;
 int D4 = 12;
-  This example code is in the public domain.
  */
 #include "DHT.h"
 #include <MsTimer2.h>
