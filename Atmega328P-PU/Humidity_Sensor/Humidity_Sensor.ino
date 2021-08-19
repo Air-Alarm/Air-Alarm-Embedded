@@ -34,7 +34,7 @@ int D4 = 12;
 #include "DHT.h"
 #include <MsTimer2.h>
 #define DHTPIN A0 
-#define DHTTYPE DHT11
+#define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
 int input;
