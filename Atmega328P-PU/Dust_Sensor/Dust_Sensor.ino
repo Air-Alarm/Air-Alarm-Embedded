@@ -49,7 +49,8 @@ float ugm3 = 0;
 float oldugm3;                                              
 int GP2Y1023 = A0;                                            
 void setup() {
-  pinMode(GP2Y1023, INPUT);                       
+  pinMode(GP2Y1023, INPUT); 
+  pinMode(A1, OUTPUT);                      
   Serial.begin(9600); 
   for (int i = 2; i < 13; i++){
     pinMode(i, OUTPUT);       
@@ -165,10 +166,13 @@ void loop() {
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
 
-  if (ugm3 > 0) {                                   
-    Serial.print(ugm3, 4);                       
-    Serial.println(" ug/m3");
+  if (ugm3 > 0) {  
     
+    digitalWrite(A1,HIGH);
+    Serial.println("D: ");                                 
+    Serial.print(ugm3, 4);                       
+    Serial.println("/");
+    digitalWrite(A1,LOW);
   }
   delay(1000);
 }

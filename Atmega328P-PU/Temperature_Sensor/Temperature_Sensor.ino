@@ -57,7 +57,7 @@ void setup() {
   for (int i = 2; i < 13; i++){
     pinMode(i, OUTPUT); 
   } 
-  pinMode(A1, OUTPUT);
+  pinMode(13, OUTPUT);
   MsTimer2::set(2, Segmentpush);
   MsTimer2::start();
 }
@@ -147,17 +147,22 @@ void Segmentpush(){
 // the loop routine runs over and over again forever:
 void loop() {
   t = dht.readTemperature();// 온도를 측정합니다.
-  digitalWrite(A1,HIGH);
+  digitalWrite(13,HIGH);
+  
   Serial.print("T: ");
   Serial.print(t);
   Serial.println("/");
-  digitalWrite(A1,LOW);
+  delay(12);
+  digitalWrite(13,LOW);
+  
   input = t*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
+
   delay(2000);
+  
 
   
 
