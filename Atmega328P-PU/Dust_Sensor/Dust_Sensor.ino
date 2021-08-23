@@ -172,7 +172,7 @@ void loop() {
     Serial.print("D: ");                                 
     Serial.print(ugm3, 4);                       
     Serial.println("/");
-    delay(12);
+    delay(14);
     digitalWrite(13,LOW);
   }
   delay(1000);
