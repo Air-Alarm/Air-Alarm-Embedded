@@ -56,6 +56,7 @@ void setup() {
   for (int i = 2; i < 13; i++){
     pinMode(i, OUTPUT); 
   } 
+  pinMode(13, OUTPUT);
   MsTimer2::set(2, Segmentpush);
   MsTimer2::start();
 }
@@ -146,12 +147,15 @@ void Segmentpush(){
 void loop() {
   
 
-
+  
   h = dht.readHumidity();// 습도를 측정합니다.
+  digitalWrite(13,HIGH);
   Serial.print("H: ");
   Serial.print(h);
-  Serial.print("/");
-
+  Serial.println("/");
+  delay(12);
+  digitalWrite(13,LOW);
+  
   input = h*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
