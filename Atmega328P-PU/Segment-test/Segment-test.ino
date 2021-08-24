@@ -45,18 +45,19 @@ void setup() {
 
   // initialize the digital pins as outputs.
 
-  for (int i = 2; i < 13; i++){
+  for (int i = 2; i < 12; i++){
     pinMode(i, OUTPUT); 
   } 
+  pinMode(A0, OUTPUT);
   MsTimer2::set(2, Segmentpush);
   MsTimer2::start();
 }
 
 void Segment(char SegmentNumx16, char PrintNumx16){
   if(SegmentNumx16 & 0x08){
-    digitalWrite(12,1);
+    digitalWrite(A0,1);
   } else {
-    digitalWrite(12,0);
+    digitalWrite(A0,0);
   }
 
   if(SegmentNumx16 & 0x04){
