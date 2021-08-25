@@ -46,7 +46,7 @@ unsigned long pulse = 0;
 
 
 float ugm3 = 0;
-float oldugm3;                                              
+                                          
 int GP2Y1023 = A0;                                            
 void setup() {
   pinMode(GP2Y1023, INPUT); 
@@ -166,16 +166,15 @@ void loop() {
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
 
-  if (ugm3 > 0) {  
-    
-    digitalWrite(13,HIGH);
-    Serial.print("D: ");                                 
-    Serial.print(ugm3, 4);                       
-    Serial.println("/");
-    delay(14);
-    digitalWrite(13,LOW);
-  }
-  delay(1000);
+
+  digitalWrite(13,HIGH);
+  Serial.print("D: ");                                 
+  Serial.print(input);                       
+  Serial.println("/");
+  delay(14);
+  digitalWrite(13,LOW);
+  
+  delay(5000);
 }
 float pulse2ugm3(unsigned long pulse) {
   float value = (pulse - 1400) / 14.0;              
