@@ -145,10 +145,13 @@ void Segmentpush(){
 
 // the loop routine runs over and over again forever:
 void loop() {
-  
 
+  int HumiTmp = 0;
+  for(int i = 0; i <= 10; i++){ 
+    HumiTmp = HumiTmp + dht.readHumidity();
+  }
+  h = HumiTmp / 10;
   
-  h = dht.readHumidity();// 습도를 측정합니다.
   digitalWrite(13,HIGH);
   Serial.print("H: ");
   Serial.print(h);
