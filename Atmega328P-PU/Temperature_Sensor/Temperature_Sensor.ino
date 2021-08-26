@@ -39,7 +39,6 @@ DHT dht(DHTPIN, DHTTYPE);
 
 int input;
 int loopcount = 0;
-float h;
 float t;
 char addr[4] = {0,0,0,0};
 
@@ -146,15 +145,20 @@ void Segmentpush(){
 
 // the loop routine runs over and over again forever:
 void loop() {
-  t = dht.readTemperature();// 온도를 측정합니다.
-  digitalWrite(13,HIGH);
+  int TempTmp = 0;
+  for(int i = 0; i <= 10; i++){ 
+    TempTmp = TempTmp + dht.readTemperature();
+  }
+  t = TempTmp / 10;
   
-  Serial.print("T: ");
-  Serial.print(t);
-  Serial.println("/");
-  delay(12);
-  digitalWrite(13,LOW);
-  
+//  digitalWrite(13,HIGH);
+//  
+//  Serial.print("T: ");
+//  Serial.print(t);
+//  Serial.println("/");
+//  delay(12);
+//  digitalWrite(13,LOW);
+//  
   input = t*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
@@ -162,9 +166,18 @@ void loop() {
   addr[3] = input % 10;
 
   delay(2000);
-  
-
-  
-
-
 }
+
+
+void serialEvent(){
+  char cTemp = Serial.read();
+    if(cTemp == 'T'||cTemp == 't'){
+        digitalWrite(13,HIGH);
+        Serial.print("T: ");
+        Serial.print(t);
+        Serial.println("/");
+        delay(12);
+        digitalWrite(13,LOW);
+    }
+
+  }
