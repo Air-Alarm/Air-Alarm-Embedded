@@ -57,6 +57,7 @@ void setup() {
     pinMode(i, OUTPUT); 
   } 
   pinMode(13, OUTPUT);
+  pinMode(A1, OUTPUT);
   MsTimer2::set(2, Segmentpush);
   MsTimer2::start();
 }
@@ -70,14 +71,18 @@ void Segment(char SegmentNumx16, char PrintNumx16){
 
   if(SegmentNumx16 & 0x04){
     digitalWrite(11,1);
+    digitalWrite(A1,0);
   } else {
     digitalWrite(11,0);
+    digitalWrite(A1,1);
   }
 
   if(SegmentNumx16 & 0x02){
     digitalWrite(10,1);
+    
   } else {
     digitalWrite(10,0);
+    
   }
 
   if(SegmentNumx16 & 0x01){

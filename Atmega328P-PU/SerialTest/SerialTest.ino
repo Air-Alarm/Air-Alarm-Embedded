@@ -7,12 +7,8 @@ void setup(){
 }
  
 void loop(){
-//  digitalWrite(2,HIGH);
-//  Serial.print("T");
-//  delay(10);
-//  digitalWrite(2,LOW);
-//  delay(1000);
- 
+  Serial.print("Help!!!!"); 
+  delay(100);
 }
 
 void serialEvent(){
