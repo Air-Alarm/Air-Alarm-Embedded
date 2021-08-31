@@ -152,20 +152,26 @@ void loop() {
   addr[1] = input % 1000 / 100;
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
-  delay(5000);
+
 
 
 }
+void serialEvent(){
+  char cTemp = Serial.read();
+  if(cTemp == 'C'||cTemp == 'c'){
+    digitalWrite(13,HIGH);
+    Serial.print(F("C: "));
+    Serial.print(co2);
+    Serial.print(F("/"));
+    Serial.println();
+    delay(14);
+    digitalWrite(13,LOW);
+  }
 
+}
 void showValue()
 {
   unsigned long start = millis();
   co2 = mhz.getCO2();
-  digitalWrite(13,HIGH);
-  Serial.print(F("C: "));
-  Serial.print(co2);
-  Serial.print(F("/"));
-  Serial.println();
-  delay(14);
-  digitalWrite(13,LOW);
+  
 }

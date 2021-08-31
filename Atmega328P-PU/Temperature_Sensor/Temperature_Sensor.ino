@@ -162,7 +162,6 @@ void loop() {
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
 
-  delay(2000);
 }
 
 

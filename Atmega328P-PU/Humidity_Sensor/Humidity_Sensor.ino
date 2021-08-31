@@ -155,21 +155,25 @@ void loop() {
   }
   h = HumiTmp / 10;
   
-  digitalWrite(13,HIGH);
-  Serial.print("H: ");
-  Serial.print(h);
-  Serial.println("/");
-  delay(12);
-  digitalWrite(13,LOW);
+ 
   
   input = h*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
   addr[2] = input % 100 / 10;
   addr[3] = input % 10;
-  delay(2000);
-
   
 
+}
+void serialEvent(){
+  char cTemp = Serial.read();
+    if(cTemp == 'H'||cTemp == 'h'){
+  digitalWrite(13,HIGH);
+  Serial.print("H: ");
+  Serial.print(h);
+  Serial.println("/");
+  delay(12);
+  digitalWrite(13,LOW);
+    }
 
 }
