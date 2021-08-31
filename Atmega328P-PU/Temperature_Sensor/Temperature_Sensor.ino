@@ -8,7 +8,7 @@ E |   | C
   |   |
    ---
     D
-
+Pin A0 = Dot(,)
 int pinA = 2;
 int pinB = 3;
 int pinC = 4;
@@ -51,12 +51,12 @@ void setup() {
   Serial.println("DHTxx test!");
   dht.begin();
   
-  // initialize the digital pins as outputs.
 
   for (int i = 2; i < 13; i++){
     pinMode(i, OUTPUT); 
   } 
   pinMode(13, OUTPUT);
+  digitalWrite(13,LOW);
   pinMode(A1, OUTPUT);
   MsTimer2::set(2, Segmentpush);
   MsTimer2::start();
@@ -155,15 +155,7 @@ void loop() {
     TempTmp = TempTmp + dht.readTemperature();
   }
   t = TempTmp / 10;
-  
-//  digitalWrite(13,HIGH);
-//  
-//  Serial.print("T: ");
-//  Serial.print(t);
-//  Serial.println("/");
-//  delay(12);
-//  digitalWrite(13,LOW);
-//  
+   
   input = t*10;
   addr[0] = input / 1000;
   addr[1] = input % 1000 / 100;
@@ -185,4 +177,4 @@ void serialEvent(){
         digitalWrite(13,LOW);
     }
 
-  }
+}

@@ -167,15 +167,25 @@ void loop() {
   addr[3] = input % 10;
 
 
-  digitalWrite(13,HIGH);
-  Serial.print("D: ");                                 
-  Serial.print(input);                       
-  Serial.println("/");
-  delay(14);
-  digitalWrite(13,LOW);
+  
   
   delay(5000);
 }
+
+void serialEvent(){
+  char cTemp = Serial.read();
+    if(cTemp == 'T'||cTemp == 't'){
+      
+      digitalWrite(13,HIGH);
+      Serial.print("D: ");                                 
+      Serial.print(input);                       
+      Serial.println("/");
+      delay(14);
+      digitalWrite(13,LOW);
+    }
+
+}
+
 float pulse2ugm3(unsigned long pulse) {
   float value = (pulse - 1400) / 14.0;              
   if (value > 300) {                                      
