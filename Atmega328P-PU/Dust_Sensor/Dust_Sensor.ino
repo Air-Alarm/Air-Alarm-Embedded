@@ -174,7 +174,7 @@ void loop() {
 
 void serialEvent(){
   char cTemp = Serial.read();
-    if(cTemp == 'T'||cTemp == 't'){
+    if(cTemp == 'D'||cTemp == 'd'){
       
       digitalWrite(13,HIGH);
       Serial.print("D: ");                                 
