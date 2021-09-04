@@ -168,12 +168,13 @@ void loop() {
 void serialEvent(){
   char cTemp = Serial.read();
     if(cTemp == 'H'||cTemp == 'h'){
-  digitalWrite(13,HIGH);
-  Serial.print("H: ");
-  Serial.print(h);
-  Serial.println("/");
-  delay(12);
-  digitalWrite(13,LOW);
+      delay(50);
+      digitalWrite(13,HIGH);
+      Serial.print("H: ");
+      Serial.print(h);
+      Serial.println("/");
+      delay(12);
+      digitalWrite(13,LOW);
     }
 
 }

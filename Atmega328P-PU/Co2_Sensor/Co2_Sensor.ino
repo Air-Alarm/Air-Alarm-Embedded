@@ -159,6 +159,7 @@ void loop() {
 void serialEvent(){
   char cTemp = Serial.read();
   if(cTemp == 'C'||cTemp == 'c'){
+    delay(50);
     digitalWrite(13,HIGH);
     Serial.print(F("C: "));
     Serial.print(co2);

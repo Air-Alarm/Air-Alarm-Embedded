@@ -171,7 +171,7 @@ void loop() {
 void serialEvent(){
   char cTemp = Serial.read();
     if(cTemp == 'D'||cTemp == 'd'){
-      
+      delay(50);
       digitalWrite(13,HIGH);
       Serial.print("D: ");                                 
       Serial.print(input);                       
