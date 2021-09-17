@@ -1,0 +1,16 @@
+!SESSION 2021-09-17 20:56:15.118 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -keyring /Users/byungwookoh/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/byungwookoh/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2021-09-17 20:56:47.518
+!MESSAGE Log4j initialized with config file /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/.metadata/.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2021-09-17 20:56:56.154
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2021-09-17 21:01:50.093
+!MESSAGE Indexed 'STM32NUCLEO-L432KC' (25 sources, 84 headers) in 10.5 sec: 5,942 declarations; 35,275 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.0049%)
