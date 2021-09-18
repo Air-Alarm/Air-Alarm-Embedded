@@ -60,16 +60,42 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define MCO_Pin GPIO_PIN_0
 #define MCO_GPIO_Port GPIOA
+#define Dig4_Pin GPIO_PIN_1
+#define Dig4_GPIO_Port GPIOA
 #define VCP_TX_Pin GPIO_PIN_2
 #define VCP_TX_GPIO_Port GPIOA
+#define G_Pin GPIO_PIN_3
+#define G_GPIO_Port GPIOA
+#define C_Pin GPIO_PIN_4
+#define C_GPIO_Port GPIOA
+#define DP_Pin GPIO_PIN_5
+#define DP_GPIO_Port GPIOA
+#define D_Pin GPIO_PIN_6
+#define D_GPIO_Port GPIOA
+#define E_Pin GPIO_PIN_7
+#define E_GPIO_Port GPIOA
+#define F_Pin GPIO_PIN_1
+#define F_GPIO_Port GPIOB
+#define Dig2_Pin GPIO_PIN_8
+#define Dig2_GPIO_Port GPIOA
+#define Dig3_Pin GPIO_PIN_11
+#define Dig3_GPIO_Port GPIOA
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
 #define SWCLK_GPIO_Port GPIOA
 #define VCP_RX_Pin GPIO_PIN_15
 #define VCP_RX_GPIO_Port GPIOA
-#define LD3_Pin GPIO_PIN_3
-#define LD3_GPIO_Port GPIOB
+#define DotB_Pin GPIO_PIN_3
+#define DotB_GPIO_Port GPIOB
+#define DotT_Pin GPIO_PIN_4
+#define DotT_GPIO_Port GPIOB
+#define B_Pin GPIO_PIN_5
+#define B_GPIO_Port GPIOB
+#define A_Pin GPIO_PIN_6
+#define A_GPIO_Port GPIOB
+#define Dig1_Pin GPIO_PIN_7
+#define Dig1_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
