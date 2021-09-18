@@ -2051,3 +2051,47 @@
 2021-09-18 20:27:10,938 [INFO] IPUIPlugin:74 - create IPUIPlugin
 2021-09-18 20:27:10,938 [INFO] IPUIPlugin:74 - create IPUIPlugin
 2021-09-18 20:27:11,499 [INFO] OpenFileManager:333 - Restore cursor
+2021-09-18 20:46:46,642 [INFO] DbMcusDocs:143 - JSON generation date=Mon Jun 07 17:53:21 KST 2021 (1623056001)
+2021-09-18 20:46:46,942 [INFO] DbMcusDocs:79 - Found 669 MCUs documents
+2021-09-18 20:54:26,416 [INFO] NvicIntPanel:96 - NVIC parent = com.st.microxplorer.plugins.ip.nvic.MultiNvicIntPanel[,0,0,712x407,layout=javax.swing.BoxLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=9,maximumSize=,minimumSize=,preferredSize=]
+2021-09-18 20:54:30,964 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 356187496 Bytes (528482304)
+2021-09-18 20:54:32,574 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 371916136 Bytes (528482304)
+2021-09-18 20:54:34,645 [INFO] UtilMem:74 - End SaveConfig() Used Memory: 446887272 Bytes (528482304)
+2021-09-18 20:54:36,491 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: NVIC
+2021-09-18 20:54:36,495 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: USART
+2021-09-18 20:54:36,495 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: USART
+2021-09-18 20:54:36,495 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: TIM6_7L4
+2021-09-18 20:54:36,495 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: SYS
+2021-09-18 20:54:36,498 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: GPIO
+2021-09-18 20:54:36,498 [INFO] BlockDiagram:2740 - set Specific Code input for plugin: RCC
+2021-09-18 20:54:36,499 [INFO] CodeGenerator:663 - code generatio: config db path: /Applications/STM32CubeIDE.app/Contents/Eclipse/plugins/com.st.stm32cube.common.mx_6.3.0.202107141111//db/
+2021-09-18 20:54:36,928 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/MXTmpFiles/license.tmp_save
+2021-09-18 20:54:37,519 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/MXTmpFiles/license.tmp
+2021-09-18 20:54:37,762 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/MXTmpFiles/gpio.tmp_save
+2021-09-18 20:54:38,320 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/MXTmpFiles/gpio.tmp
+2021-09-18 20:54:38,986 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Src/stm32l4xx_it.c_save
+2021-09-18 20:54:39,320 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Src/stm32l4xx_it.c
+2021-09-18 20:54:39,323 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Inc/stm32l4xx_it.h_save
+2021-09-18 20:54:39,681 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Inc/stm32l4xx_it.h
+2021-09-18 20:54:39,737 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Src/stm32l4xx_hal_msp.c_save
+2021-09-18 20:54:40,075 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Src/stm32l4xx_hal_msp.c
+2021-09-18 20:54:40,077 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/MXTmpFiles/system.tmp_save
+2021-09-18 20:54:40,149 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/MXTmpFiles/system.tmp
+2021-09-18 20:54:40,156 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Inc/stm32l4xx_hal_conf.h_save
+2021-09-18 20:54:40,246 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Inc/stm32l4xx_hal_conf.h
+2021-09-18 20:54:40,409 [WARN] IPConfigManager:3148 - IP not found : TIM
+2021-09-18 20:54:40,410 [WARN] CodeGenerator:3268 - IP not found : null
+2021-09-18 20:54:40,413 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Inc/main.h_save
+2021-09-18 20:54:40,655 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Inc/main.h
+2021-09-18 20:54:40,658 [INFO] CodeEngine:239 - oldGeneratedFile, /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Src/main.c_save
+2021-09-18 20:54:40,930 [INFO] CodeEngine:257 - Generated code: /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/Core/Src/main.c
+2021-09-18 20:54:41,798 [INFO] ProjectBuilder:2578 - Time for Copy HAL[1] : 74mS.
+2021-09-18 20:54:41,819 [INFO] ProjectBuilder:3622 - Project Generator version: 3.14.1
+2021-09-18 20:54:42,463 [INFO] ConfigFileManager:1271 - The Die is : DIE435
+2021-09-18 20:54:42,547 [INFO] ApiDbMcu:468 - Load IP Config File for FATFS
+2021-09-18 20:54:42,569 [INFO] ApiDbMcu:468 - Load IP Config File for FREERTOS
+2021-09-18 20:54:42,583 [INFO] ApiDbMcu:468 - Load IP Config File for TOUCHSENSING
+2021-09-18 20:54:42,593 [INFO] ApiDbMcu:468 - Load IP Config File for USB_DEVICE
+2021-09-18 20:54:48,349 [INFO] ProjectBuilder:3789 - Time for Generating toolchain IDE Files: 6530mS.
+2021-09-18 20:54:48,361 [INFO] ProjectBuilder:2457 - Time for Copy CMSIS : 3mS.
+2021-09-18 20:54:48,364 [INFO] ProjectBuilder:2457 - Time for Copy CMSIS : 0mS.
