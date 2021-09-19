@@ -102,67 +102,85 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//타이머 인터럽
    */
 }
 
+void Seg_Off(void){
+
+	HAL_GPIO_WritePin(GPIOA, DP_Pin, 0);
+	HAL_GPIO_WritePin(GPIOB, G_Pin, 0);
+	HAL_GPIO_WritePin(GPIOA, F_Pin, 0);
+	HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
+	HAL_GPIO_WritePin(GPIOA, D_Pin, 0);
+	HAL_GPIO_WritePin(GPIOA, C_Pin, 0);
+	HAL_GPIO_WritePin(GPIOB, B_Pin, 0);
+	HAL_GPIO_WritePin(GPIOB, A_Pin, 0);
+
+
+
+
+
+}
 void Num_Select(unsigned char PrintNumx16) {
-	if (PrintNumx16 & 0x40) {
-		HAL_GPIO_WritePin(GPIOA, G_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, G_Pin, 1);
-	}
-	if (PrintNumx16 & 0x20) {
-		HAL_GPIO_WritePin(GPIOB, F_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOB, F_Pin, 1);
-	}
-	if (PrintNumx16 & 0x10) {
-		HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, E_Pin, 1);
-	}
-	if (PrintNumx16 & 0x08) {
-		HAL_GPIO_WritePin(GPIOA, D_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, D_Pin, 1);
-	}
-	if (PrintNumx16 & 0x04) {
-		HAL_GPIO_WritePin(GPIOA, C_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, C_Pin, 1);
-	}
-	if (PrintNumx16 & 0x02) {
-		HAL_GPIO_WritePin(GPIOB, B_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOB, B_Pin, 1);
-	}
-	if (PrintNumx16 & 0x01) {
-		HAL_GPIO_WritePin(GPIOB, A_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOB, A_Pin, 1);
-	}
+//
+//	if (PrintNumx16 & 0x40) {
+//		HAL_GPIO_WritePin(GPIOA, G_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOA, G_Pin, 1);
+//	}
+//	if (PrintNumx16 & 0x20) {
+//		HAL_GPIO_WritePin(GPIOB, F_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOB, F_Pin, 1);
+//	}
+//	if (PrintNumx16 & 0x10) {
+//		HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOA, E_Pin, 1);
+//	}
+//	if (PrintNumx16 & 0x08) {
+//		HAL_GPIO_WritePin(GPIOA, D_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOA, D_Pin, 1);
+//	}
+//	if (PrintNumx16 & 0x04) {
+//		HAL_GPIO_WritePin(GPIOA, C_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOA, C_Pin, 1);
+//	}
+//	if (PrintNumx16 & 0x02) {
+//		HAL_GPIO_WritePin(GPIOB, B_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOB, B_Pin, 1);
+//	}
+//	if (PrintNumx16 & 0x01) {
+//		HAL_GPIO_WritePin(GPIOB, A_Pin, 0);
+//	} else {
+//		HAL_GPIO_WritePin(GPIOB, A_Pin, 1);
+//	}
 
 }
 
 void Segment_Select(unsigned char SegmentNum, unsigned char PrintNumx16) {
 	//출력할 세그먼트 결정
 
+
+	HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, Dig2_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, Dig3_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, Dig4_Pin, 1);
+
+	Seg_Off();
+
 	if (SegmentNum == 0) {
 		HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 1);
 	}
-	if (SegmentNum == 1) {
+	else if (SegmentNum == 1) {
 		HAL_GPIO_WritePin(GPIOA, Dig2_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, Dig2_Pin, 1);
 	}
-	if (SegmentNum == 2) {
+	else if (SegmentNum == 2) {
 		HAL_GPIO_WritePin(GPIOA, Dig3_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, Dig3_Pin, 1);
 	}
-	if (SegmentNum == 3) {
+	else //if (SegmentNum == 3)
+	{
 		HAL_GPIO_WritePin(GPIOA, Dig4_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, Dig4_Pin, 1);
 	}
 	Num_Select(PrintNumx16);
 
@@ -199,7 +217,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
-  MX_TIM6_Init();
+  //MX_TIM6_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();

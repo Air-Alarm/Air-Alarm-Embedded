@@ -1,6 +1,9 @@
-09:22:46 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+17:42:47 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:334:13: warning: 'MX_TIM6_Init' defined but not used [-Wunused-function]
+  334 | static void MX_TIM6_Init(void)
+      |             ^~~~~~~~~~~~
 arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM32NUCLEO-L432KC.elf
  
@@ -8,7 +11,7 @@ arm-none-eabi-size   STM32NUCLEO-L432KC.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
    text	   data	    bss	    dec	    hex	filename
-  16544	     28	   1924	  18496	   4840	STM32NUCLEO-L432KC.elf
+  15632	     28	   1924	  17584	   44b0	STM32NUCLEO-L432KC.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-L432KC.bin
@@ -16,5 +19,5 @@ Finished building: STM32NUCLEO-L432KC.bin
 Finished building: STM32NUCLEO-L432KC.list
  
 
-09:22:48 Build Finished. 0 errors, 0 warnings. (took 1s.378ms)
+17:42:48 Build Finished. 0 errors, 1 warnings. (took 1s.179ms)
 
