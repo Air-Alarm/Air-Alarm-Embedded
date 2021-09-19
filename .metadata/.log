@@ -896,3 +896,16 @@ Caused by: java.net.ConnectException: Operation timed out (Connection timed out)
 	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket(SSLConnectionSocketFactory.java:368)
 	at org.apache.http.impl.conn.DefaultHttpClientConnectionOperator.connect(DefaultHttpClientConnectionOperator.java:142)
 	... 13 more
+!SESSION 2021-09-20 03:36:06.418 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=ko_KR
+Framework arguments:  -keyring /Users/byungwookoh/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/byungwookoh/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2021-09-20 03:37:45.665
+!MESSAGE Log4j initialized with config file /Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/.metadata/.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2021-09-20 03:37:55.180
+!MESSAGE Started RMI Server, listening on port 41337
