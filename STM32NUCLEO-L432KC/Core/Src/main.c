@@ -15,6 +15,15 @@
   *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
+  Nucleo-L432KC <--> RaspberryPi
+			    Uart2
+
+
+  Atmega328P-PU <--> Nucleo-L432KC
+			    Uart1
+
+
+  ******************************************************************************
   */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
@@ -46,7 +55,9 @@ UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+int Seg_Out = 5279; //세그먼트에 표시될 숫자
+uint8_t rx1_data;
+uint8_t buff[10];//uart 입력 버퍼
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,18 +66,34 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int buffcount = 9;
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+	if(huart->Instance == USART1){
+		HAL_UART_Receive_IT(&huart1, &rx1_data, 1);
+		buff[buffcount] = rx1_data;
+		buffcount--;
+		if (buffcount == 0){
+			buffcount = 9;
+		}
+	    HAL_UART_Transmit(&huart2, &rx1_data, 1, 10);
+
+	}
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//타이머 인터럽트
 {
 
-  if(htim->Instance == TIM6){
+  if(htim->Instance == TIM6){//타이머6 인터럽트 실행(1초)
 	  HAL_GPIO_TogglePin(GPIOB, DotT_Pin);
+//	  Seg_Out++;
 
   }
 
@@ -173,8 +200,12 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   MX_TIM6_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim6);
+  HAL_UART_Receive_IT(&huart1, &rx1_data, 1);//uart1 인터럽트실행을 위한 기능
   unsigned char List_Of_Segment_Info[10] = { 0xC0, 0xF9, 0xA4, 0xB0, 0x99,
  		  0x92, 0x82, 0xD8, 0x80, 0x98 };
   int addr[4];
@@ -186,20 +217,20 @@ int main(void)
   while (1)
   {
 
-	  int input = 1234;
-	  addr[0] = input / 1000;
-	  addr[1] = input % 1000 / 100;
-	  addr[2] = input % 100 / 10;
-	  addr[3] = input % 10;
+
+	  addr[0] = Seg_Out / 1000;
+	  addr[1] = Seg_Out % 1000 / 100;
+	  addr[2] = Seg_Out % 100 / 10;
+	  addr[3] = Seg_Out % 10;
 
 	  for (int i = 0; i<4; i++){
 		  Segment_Select(i, List_Of_Segment_Info[addr[i]]);
 		  HAL_Delay(1);
 	  }
 
-//
-//	  HAL_GPIO_WritePin(GPIOB, A_Pin, 1);
-//	  HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 0);
+	  //Uart출력(채널, 출력변수주소, 변수크기, 타임아웃)
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -261,6 +292,20 @@ void SystemClock_Config(void)
   /** Enable MSI Auto calibration
   */
   HAL_RCCEx_EnableMSIPLLMode();
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* USART1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
+  /* USART2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART2_IRQn);
 }
 
 /**
