@@ -74,7 +74,7 @@ static void MX_NVIC_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int buffcount = 9;
-char T[5] = "00000";
+char T[5] = "000000";
 void Check_Buff(void){
 	for(int i = 9; i >= 0; i--){
 		if (buff[i] == 'T'){
@@ -111,8 +111,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//타이머 인터럽
 {
 
   if(htim->Instance == TIM6){//타이머6 인터럽트 실행(1초)
-	  HAL_GPIO_TogglePin(GPIOA, DotT_Pin);
-	  HAL_GPIO_TogglePin(GPIOA, DotB_Pin);
+	  HAL_GPIO_TogglePin(GPIOB, DotT_Pin);
+	  HAL_GPIO_TogglePin(GPIOB, DotB_Pin);
 
 //	  Seg_Out++;
 
@@ -125,13 +125,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//타이머 인터럽
 
 void Seg_Off(void){
 
-	HAL_GPIO_WritePin(GPIOA, G_Pin, 0);
+	HAL_GPIO_WritePin(GPIOA, DP_Pin, 0);
+	HAL_GPIO_WritePin(GPIOB, G_Pin, 0);
 	HAL_GPIO_WritePin(GPIOA, F_Pin, 0);
 	HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
 	HAL_GPIO_WritePin(GPIOA, D_Pin, 0);
 	HAL_GPIO_WritePin(GPIOA, C_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, B_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, A_Pin, 0);
+	HAL_GPIO_WritePin(GPIOB, B_Pin, 0);
+	HAL_GPIO_WritePin(GPIOB, A_Pin, 0);
 
 
 
@@ -146,9 +147,9 @@ void Num_Select(unsigned char PrintNumx16) {
 		HAL_GPIO_WritePin(GPIOA, G_Pin, 1);
 	}
 	if (PrintNumx16 & 0x20) {
-		HAL_GPIO_WritePin(GPIOA, F_Pin, 0);
+		HAL_GPIO_WritePin(GPIOB, F_Pin, 0);
 	} else {
-		HAL_GPIO_WritePin(GPIOA, F_Pin, 1);
+		HAL_GPIO_WritePin(GPIOB, F_Pin, 1);
 	}
 	if (PrintNumx16 & 0x10) {
 		HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
@@ -166,14 +167,14 @@ void Num_Select(unsigned char PrintNumx16) {
 		HAL_GPIO_WritePin(GPIOA, C_Pin, 1);
 	}
 	if (PrintNumx16 & 0x02) {
-		HAL_GPIO_WritePin(GPIOA, B_Pin, 0);
+		HAL_GPIO_WritePin(GPIOB, B_Pin, 0);
 	} else {
-		HAL_GPIO_WritePin(GPIOA, B_Pin, 1);
+		HAL_GPIO_WritePin(GPIOB, B_Pin, 1);
 	}
 	if (PrintNumx16 & 0x01) {
-		HAL_GPIO_WritePin(GPIOA, A_Pin, 0);
+		HAL_GPIO_WritePin(GPIOB, A_Pin, 0);
 	} else {
-		HAL_GPIO_WritePin(GPIOA, A_Pin, 1);
+		HAL_GPIO_WritePin(GPIOB, A_Pin, 1);
 	}
 
 }
@@ -184,9 +185,9 @@ void Segment_Select(unsigned char SegmentNum, unsigned char PrintNumx16) {
 	Seg_Off();
 
 	HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 1);
-	HAL_GPIO_WritePin(GPIOB, Dig2_Pin, 1);
-	HAL_GPIO_WritePin(GPIOB, Dig3_Pin, 1);
-	HAL_GPIO_WritePin(GPIOB, Dig4_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, Dig2_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, Dig3_Pin, 1);
+	HAL_GPIO_WritePin(GPIOA, Dig4_Pin, 1);
 
 
 
@@ -194,14 +195,14 @@ void Segment_Select(unsigned char SegmentNum, unsigned char PrintNumx16) {
 		HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 0);
 	}
 	else if (SegmentNum == 1) {
-		HAL_GPIO_WritePin(GPIOB, Dig2_Pin, 0);
+		HAL_GPIO_WritePin(GPIOA, Dig2_Pin, 0);
 	}
 	else if (SegmentNum == 2) {
-		HAL_GPIO_WritePin(GPIOB, Dig3_Pin, 0);
+		HAL_GPIO_WritePin(GPIOA, Dig3_Pin, 0);
 	}
 	else //if (SegmentNum == 3)
 	{
-		HAL_GPIO_WritePin(GPIOB, Dig4_Pin, 0);
+		HAL_GPIO_WritePin(GPIOA, Dig4_Pin, 0);
 	}
 	Num_Select(PrintNumx16);
 
@@ -248,7 +249,7 @@ int main(void)
   unsigned char List_Of_Segment_Info[10] = { 0xC0, 0xF9, 0xA4, 0xB0, 0x99,
  		  0x92, 0x82, 0xD8, 0x80, 0x98 };
   int addr[4];
-  HAL_GPIO_WritePin(GPIOA, DotB_Pin, 1);
+  HAL_GPIO_WritePin(GPIOB, DotB_Pin, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -339,6 +340,9 @@ void SystemClock_Config(void)
   */
 static void MX_NVIC_Init(void)
 {
+  /* USART1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART1_IRQn);
   /* USART2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART2_IRQn);
@@ -398,7 +402,7 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
+  huart1.Init.BaudRate = 9600;
   huart1.Init.WordLength = UART_WORDLENGTH_8B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
@@ -467,26 +471,26 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, A_Pin|B_Pin|C_Pin|D_Pin
-                          |E_Pin|F_Pin|G_Pin|DotT_Pin
-                          |DotB_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, Dig4_Pin|G_Pin|C_Pin|DP_Pin
+                          |D_Pin|E_Pin|Dig2_Pin|Dig3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, F_Pin|DotB_Pin|DotT_Pin|B_Pin
+                          |A_Pin|Dig1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : A_Pin B_Pin C_Pin D_Pin
-                           E_Pin F_Pin G_Pin DotT_Pin
-                           DotB_Pin */
-  GPIO_InitStruct.Pin = A_Pin|B_Pin|C_Pin|D_Pin
-                          |E_Pin|F_Pin|G_Pin|DotT_Pin
-                          |DotB_Pin;
+  /*Configure GPIO pins : Dig4_Pin G_Pin C_Pin DP_Pin
+                           D_Pin E_Pin Dig2_Pin Dig3_Pin */
+  GPIO_InitStruct.Pin = Dig4_Pin|G_Pin|C_Pin|DP_Pin
+                          |D_Pin|E_Pin|Dig2_Pin|Dig3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Dig1_Pin Dig2_Pin Dig3_Pin Dig4_Pin */
-  GPIO_InitStruct.Pin = Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin;
+  /*Configure GPIO pins : F_Pin DotB_Pin DotT_Pin B_Pin
+                           A_Pin Dig1_Pin */
+  GPIO_InitStruct.Pin = F_Pin|DotB_Pin|DotT_Pin|B_Pin
+                          |A_Pin|Dig1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
