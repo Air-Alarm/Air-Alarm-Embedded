@@ -1389,3 +1389,258 @@ Finished building: STM32NUCLEO-L432KC.bin
  
 Finished building: STM32NUCLEO-L432KC.list
  
+18:49:33 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
+18:49:37 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+18:50:02 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+18:50:49 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+18:50:51 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+18:51:10 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+18:51:50 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+18:52:41 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16404	     28	   1924	  18356	   47b4	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+19:15:08 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+../Core/Src/main.c: In function 'Check_Buff':
+../Core/Src/main.c:82:14: error: 'Buff' undeclared (first use in this function); did you mean 'buff'?
+   82 |     if('0' < Buff[i+2] && Buff[i+2] < '9'){
+      |              ^~~~
+      |              buff
+../Core/Src/main.c:82:14: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+19:15:26 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+../Core/Src/main.c: In function 'Check_Buff':
+../Core/Src/main.c:83:13: error: 'Buff' undeclared (first use in this function); did you mean 'buff'?
+   83 |      T[1] = Buff[i+2];
+      |             ^~~~
+      |             buff
+../Core/Src/main.c:83:13: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+19:15:36 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
+19:17:09 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
+19:18:02 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+19:18:18 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+19:18:21 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+19:20:01 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
+19:21:10 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16524	     36	   1924	  18484	   4834	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
+00:00:37 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16764	     36	   1924	  18724	   4924	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+Finished building: STM32NUCLEO-L432KC.list
+ 
+ 
+00:01:17 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16764	     36	   1924	  18724	   4924	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
+00:27:14 **** Incremental Build of configuration Debug for project STM32NUCLEO-L432KC ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L432xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:77:13: warning: initializer-string for array of chars is too long
+   77 | char T[5] = "000000";
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-L432KC.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-L432KC/STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-L432KC.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-L432KC.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-L432KC.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-L432KC.elf  > "STM32NUCLEO-L432KC.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-L432KC.elf  "STM32NUCLEO-L432KC.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16772	     36	   1924	  18732	   492c	STM32NUCLEO-L432KC.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-L432KC.bin
+ 
+Finished building: STM32NUCLEO-L432KC.list
+ 
