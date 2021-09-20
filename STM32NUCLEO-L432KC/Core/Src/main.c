@@ -59,7 +59,8 @@ UART_HandleTypeDef huart2;
 int Seg_Out = 5279; //세그먼트에 표시될 숫자
 uint8_t rx1_data;
 uint8_t buff[10];//uart 입력 버퍼
-int ms = 0;
+uint8_t ms = 0;
+int buffcheck = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,7 +99,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
 		buffcount--;
 
 		if (rx1_data == ','){
-			Check_Buff();
+			buffcheck++;
 
 		};
 
@@ -115,13 +116,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//타이머 인터럽
 
   if(htim->Instance == TIM6){//타이머6 인터럽트 실행(1초)
 	  HAL_GPIO_TogglePin(GPIOA, DotT_Pin);
-	  HAL_GPIO_TogglePin(GPIOA, DotB_Pin);
-//
+
 	  Seg_Out++;
 
   }
 
-  if(htim->Instance == TIM7){//타이머6 인터럽트 실행(1초)
+  if(htim->Instance == TIM7){//타이머6 인터럽트 실행(ms)
   	  ms++;
 
     }
@@ -134,86 +134,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)//타이머 인터럽
 
 void Seg_Off(void){
 
-	HAL_GPIO_WritePin(GPIOA, G_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, F_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, D_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, C_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, B_Pin, 0);
-	HAL_GPIO_WritePin(GPIOA, A_Pin, 0);
 
+	HAL_GPIO_WritePin(GPIOA, A_Pin|B_Pin|C_Pin|D_Pin|E_Pin|F_Pin|G_Pin, 0); //세그먼트 구성 핀 모두 끄기
 
-
-
-
-}
-void Num_Select(unsigned char PrintNumx16) {
-
-	if (PrintNumx16 & 0x40) {
-		HAL_GPIO_WritePin(GPIOA, G_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, G_Pin, 1);
-	}
-	if (PrintNumx16 & 0x20) {
-		HAL_GPIO_WritePin(GPIOA, F_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, F_Pin, 1);
-	}
-	if (PrintNumx16 & 0x10) {
-		HAL_GPIO_WritePin(GPIOA, E_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, E_Pin, 1);
-	}
-	if (PrintNumx16 & 0x08) {
-		HAL_GPIO_WritePin(GPIOA, D_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, D_Pin, 1);
-	}
-	if (PrintNumx16 & 0x04) {
-		HAL_GPIO_WritePin(GPIOA, C_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, C_Pin, 1);
-	}
-	if (PrintNumx16 & 0x02) {
-		HAL_GPIO_WritePin(GPIOA, B_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, B_Pin, 1);
-	}
-	if (PrintNumx16 & 0x01) {
-		HAL_GPIO_WritePin(GPIOA, A_Pin, 0);
-	} else {
-		HAL_GPIO_WritePin(GPIOA, A_Pin, 1);
-	}
+	HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, 1); //세그먼트 Dgit핀 모두 끄기
 
 }
 
-void Segment_Select(unsigned char SegmentNum, unsigned char PrintNumx16) {
-	//출력할 세그먼트 결정
 
-	Seg_Off();
+void Segment(unsigned char SegmentNum, unsigned char PrintNumx16) {
+	Seg_Off(); // 모든 세그먼트 끄기
 
-	HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 1);
-	HAL_GPIO_WritePin(GPIOB, Dig2_Pin, 1);
-	HAL_GPIO_WritePin(GPIOB, Dig3_Pin, 1);
-	HAL_GPIO_WritePin(GPIOB, Dig4_Pin, 1);
+	uint16_t i[4] = {1,2,8,16};
 
 
+	HAL_GPIO_WritePin(GPIOB, i[SegmentNum], 0);
 
-	if (SegmentNum == 0) {
-		HAL_GPIO_WritePin(GPIOB, Dig1_Pin, 0);
-	}
-	else if (SegmentNum == 1) {
-		HAL_GPIO_WritePin(GPIOB, Dig2_Pin, 0);
-	}
-	else if (SegmentNum == 2) {
-		HAL_GPIO_WritePin(GPIOB, Dig3_Pin, 0);
-	}
-	else //if (SegmentNum == 3)
-	{
-		HAL_GPIO_WritePin(GPIOB, Dig4_Pin, 0);
-	}
-	Num_Select(PrintNumx16);
 
+//	Num_Select(PrintNumx16);
+
+	uint16_t j = 0;//출력 핀과 입력 값의 비트연산을 위한 변수
+
+	j |= (~(PrintNumx16&0xFF))<<3; //PA4 부터로 옮기고시프 4로 변경
+
+	HAL_GPIO_WritePin(GPIOA, j, 1);
 }
 
 int segdig = 0;
@@ -261,7 +205,7 @@ int main(void)
   unsigned char List_Of_Segment_Info[10] = { 0xC0, 0xF9, 0xA4, 0xB0, 0x99,
  		  0x92, 0x82, 0xD8, 0x80, 0x98 };
   int addr[4];
-  HAL_GPIO_WritePin(GPIOA, DotB_Pin, 1);
+//  HAL_GPIO_WritePin(GPIOA, DotB_Pin, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -275,18 +219,20 @@ int main(void)
 	  addr[2] = Seg_Out % 100 / 10;
 	  addr[3] = Seg_Out % 10;
 
-	  if (ms > 0){
-		  Segment_Select(segdig, List_Of_Segment_Info[addr[segdig]]);
+	  if (ms > 3){
+
+		  Segment(segdig, List_Of_Segment_Info[addr[segdig]]);
 		  segdig++;
 		  if (segdig == 4){
 			  segdig = 0;
 		  }
+		  ms = 0;
+
 	  }
-//	  for (int i = 0; i<4; i++){
-//
-//		  Segment_Select(i, List_Of_Segment_Info[addr[i]]);
-//		  HAL_Delay(1);
-//	  }
+
+	  if (buffcheck > 0){
+		  Check_Buff();
+	  }
 
 	  //Uart출력(채널, 출력변수주소, 변수크기, 타임아웃)
 
@@ -524,21 +470,19 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, A_Pin|B_Pin|C_Pin|D_Pin
-                          |E_Pin|F_Pin|G_Pin|DotT_Pin
-                          |DotB_Pin, GPIO_PIN_RESET);
+                          |E_Pin|F_Pin|G_Pin|DotT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : A_Pin B_Pin C_Pin D_Pin
-                           E_Pin F_Pin G_Pin DotT_Pin
-                           DotB_Pin */
+                           E_Pin F_Pin G_Pin DotT_Pin */
   GPIO_InitStruct.Pin = A_Pin|B_Pin|C_Pin|D_Pin
-                          |E_Pin|F_Pin|G_Pin|DotT_Pin
-                          |DotB_Pin;
+                          |E_Pin|F_Pin|G_Pin|DotT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -550,6 +494,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : DHT22_Pin */
+  GPIO_InitStruct.Pin = DHT22_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(DHT22_GPIO_Port, &GPIO_InitStruct);
 
 }
 

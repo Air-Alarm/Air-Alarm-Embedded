@@ -82,8 +82,6 @@ void Error_Handler(void);
 #define G_GPIO_Port GPIOA
 #define DotT_Pin GPIO_PIN_10
 #define DotT_GPIO_Port GPIOA
-#define DotB_Pin GPIO_PIN_11
-#define DotB_GPIO_Port GPIOA
 #define SWDIO_Pin GPIO_PIN_13
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
@@ -94,6 +92,8 @@ void Error_Handler(void);
 #define Dig3_GPIO_Port GPIOB
 #define Dig4_Pin GPIO_PIN_4
 #define Dig4_GPIO_Port GPIOB
+#define DHT22_Pin GPIO_PIN_3
+#define DHT22_GPIO_Port GPIOH
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
