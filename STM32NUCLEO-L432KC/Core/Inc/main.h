@@ -92,8 +92,8 @@ void Error_Handler(void);
 #define Dig3_GPIO_Port GPIOB
 #define Dig4_Pin GPIO_PIN_4
 #define Dig4_GPIO_Port GPIOB
-#define DHT22_Pin GPIO_PIN_3
-#define DHT22_GPIO_Port GPIOH
+#define DHT22_Pin GPIO_PIN_5
+#define DHT22_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
