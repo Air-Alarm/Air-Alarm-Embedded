@@ -15,8 +15,6 @@
   *                        opensource.org/licenses/BSD-3-Clause
   *
   ******************************************************************************
-  Nucleo-L432KC <--> RaspberryPi
-			    Uart2
 
 
   Atmega328P-PU <--> Nucleo-L432KC
@@ -31,7 +29,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "i2c-lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +55,7 @@ TIM_HandleTypeDef htim7;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-int Seg_Out = 5279; //세그먼트에 표시될 숫자
+int Seg_Out = 5678; //세그먼트에 표시될 숫자
 uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
@@ -128,13 +126,15 @@ void Segment() {
 	addr[3] = Seg_Out % 10;
 
 	uint16_t i[4] = {1,2,8,16}; //세그먼트 Dgit 조정
-	HAL_GPIO_WritePin(GPIOB, i[segdig], 0);
+
+//	HAL_GPIO_WritePin(GPIOB, i[segdig], 0); 아랫줄로 대체
+	GPIOB->BRR = (uint32_t)i[segdig];
 
 	uint16_t j = 0;//출력 핀과 입력 값의 비트연산을 위한 변수
 
-	j |= (~(List_Of_Segment_Info[addr[segdig]]&0xFF))<<3; //PA4 부터로 옮기고시프 4로 변경
-	HAL_GPIO_WritePin(GPIOA, j, 1);
-
+	j = (~(List_Of_Segment_Info[addr[segdig]]&0xFF))<<4; // = 과|= 의 차이가 없음 이유가 뭘까..?
+//	HAL_GPIO_WritePin(GPIOA, j, 1); 아랫줄로 대체
+	GPIOA->BSRR = (uint32_t)j;
 	segdig++;
 	if (segdig == 4){
 		segdig = 0;
@@ -177,13 +177,16 @@ int main(void)
   MX_TIM6_Init();
   MX_TIM7_Init();
   MX_I2C1_Init();
-
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim6);//타이머 인터럽트 시작
   HAL_TIM_Base_Start_IT(&htim7);
   HAL_UART_Receive_IT(&huart2, &rx2_data, 2);//uart2 인터럽트실행을 위한 기능
+  lcd_init();
+  lcd_send_string("test");
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -191,10 +194,10 @@ int main(void)
   while (1)
   {
 
-	  if (ms > 3){
-		  Segment();//3ms마다 세븐세그먼트를 출력
-		  ms = 0;
-	  }
+//	  if (ms > 3){
+//		  Segment();//3ms마다 세븐세그먼트를 출력
+//		  ms = 0;
+//	  }
 
 
 

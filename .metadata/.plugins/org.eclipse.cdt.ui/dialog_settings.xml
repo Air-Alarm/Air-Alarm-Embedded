@@ -11,4 +11,8 @@
 		<item key="DIALOG_HEIGHT" value="380"/>
 		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
 	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
+		<item key="size.width" value="343"/>
+		<item key="size.height" value="180"/>
+	</section>
 </section>
