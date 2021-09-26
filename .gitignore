@@ -155,4 +155,5 @@ Temporary Items
 *.xmi
 *.log
 .metadata/
+/STM32NUCLEO-F401RE/Debug
 

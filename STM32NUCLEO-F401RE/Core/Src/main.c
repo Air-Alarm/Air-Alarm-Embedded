@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "lcd16x2_i2c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,6 +50,7 @@ int Seg_Out = 1234; //세그먼트에 표시될 숫자
 uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
+uint8_t lcd = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -138,6 +139,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim10);
   HAL_TIM_Base_Start_IT(&htim11);
+  if(lcd16x2_i2c_init(&hi2c1)){
+ 	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
+  }
+  lcd16x2_i2c_clear();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -145,9 +150,21 @@ int main(void)
   while (1)
   {
 
-	  if (ms > 3){
+	  if (ms > 1){
 	  		  Segment();//3ms마다 세븐세그먼트를 출력
 	  		  ms = 0;
+	  	  }
+
+	  	  if (lcd > 5){
+		  lcd16x2_i2c_setCursor(0,0);
+		  lcd16x2_i2c_printf("T: %.2f",1.23);
+		  lcd16x2_i2c_setCursor(0,9);
+		  lcd16x2_i2c_printf("D: %.2f",1.24);
+		  lcd16x2_i2c_setCursor(1,0);
+		  lcd16x2_i2c_printf("H: %.2f",11.26);
+		  lcd16x2_i2c_setCursor(1,9);
+		  lcd16x2_i2c_printf("C: %d",600);
+		  lcd = 0;
 	  	  }
 
 
@@ -349,6 +366,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PC8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pin : PC10 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -376,12 +399,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	if(htim->Instance == TIM10){//타이머6 인터럽트 실행(1초)
 	  HAL_GPIO_TogglePin(GPIOA, DotT_Pin);
-//	  Seg_Out++;
+	  Seg_Out++;
+	  lcd++;
 
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
 		  ms++;
-		  HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
 		}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
