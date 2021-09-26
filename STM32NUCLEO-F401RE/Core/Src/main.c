@@ -51,7 +51,7 @@ uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
 uint8_t lcd = 0;
-uint8_t CO2ms = 0;
+uint32_t CO2ms = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,25 +102,44 @@ void Segment() {
 
 }
 int C; //CO2 level
+int rising_time;
+int falling_time;
+int rerising_time;
+char rising_check = 0;
+char falling_check = 0;
+char rerising_check = 0;
+int TH; // high level output time during cycle
+int TL; // low level output time during cycle
+char CO2_Pin_State= 0;
+char OLD_CO2_Pin_State = 0;
 void check_CO2(){
-	int rising_time;
-	int falling_time;
+	//	int rising_time;
+//	int falling_time;
+//
+//	int TH; // high level output time during cycle
+//	int TL; // low level output time during cycle
+//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
+//	rising_time = CO2ms;
+//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
+//	falling_time = CO2ms;
+//	TH = rising_time - falling_time;
+//
+//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
+//	falling_time = CO2ms;
+//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
+//	rising_time = CO2ms;
+//	TL = rising_time - falling_time;
+//
+//	C = 2000*(TH-2)/(TH+TL-4);
 
-	int TH; // high level output time during cycle
-	int TL; // low level output time during cycle
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
-	rising_time = CO2ms;
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
-	falling_time = CO2ms;
-	TH = rising_time - falling_time;
-
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
-	falling_time = CO2ms;
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
-	rising_time = CO2ms;
-	TL = rising_time - falling_time;
-
+	TH =  falling_time - rising_time;
+	TL = rerising_time - falling_time;
 	C = 2000*(TH-2)/(TH+TL-4);
+
+	int a = 0;
+	rising_time = 0;
+	falling_time  = 0;
+	rerising_time = 0;
 
 
 
@@ -168,13 +187,17 @@ int main(void)
  	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
   }
   lcd16x2_i2c_clear();
+  rising_check = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  check_CO2();
+
+	  if (rising_time < falling_time && falling_time < rerising_time){
+		  check_CO2();
+	  }
 
 	  if (ms > 1){
 	  		  Segment();//3ms마다 세븐세그먼트를 출력
@@ -430,8 +453,36 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
-		  ms++;
-		  CO2ms++;
+		CO2_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
+//		if (CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 0){
+//			rising_check = 1;
+//		}
+
+		if (rising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){ //라이징 엣지
+			rising_time = CO2ms;
+			rising_check = 0;
+			falling_time = 0;
+			falling_check = 1;
+		}
+
+		if (falling_check && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 0){ //폴링 엣지
+			falling_check = 0;
+			falling_time = CO2ms;
+			rerising_time = 0;
+			rerising_check = 1;
+		}
+		if (rerising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){
+			rerising_time = CO2ms;
+			rerising_check = 0;
+			rising_check = 1;
+		}
+
+
+
+		OLD_CO2_Pin_State = CO2_Pin_State;
+
+		ms++;
+		CO2ms++;
 		}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
