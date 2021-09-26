@@ -51,6 +51,7 @@ uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
 uint8_t lcd = 0;
+uint8_t CO2ms = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,6 +99,30 @@ void Segment() {
 	if (segdig == 4){
 		segdig = 0;
 	}
+
+}
+int C; //CO2 level
+void check_CO2(){
+	int rising_time;
+	int falling_time;
+
+	int TH; // high level output time during cycle
+	int TL; // low level output time during cycle
+	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
+	rising_time = CO2ms;
+	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
+	falling_time = CO2ms;
+	TH = rising_time - falling_time;
+
+	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
+	falling_time = CO2ms;
+	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
+	rising_time = CO2ms;
+	TL = rising_time - falling_time;
+
+	C = 2000*(TH-2)/(TH+TL-4);
+
+
 
 }
 /* USER CODE END 0 */
@@ -149,13 +174,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  check_CO2();
 
 	  if (ms > 1){
 	  		  Segment();//3ms마다 세븐세그먼트를 출력
 	  		  ms = 0;
 	  	  }
 
-	  	  if (lcd > 5){
+	  if (lcd > 5){
 		  lcd16x2_i2c_setCursor(0,0);
 		  lcd16x2_i2c_printf("T: %.2f",1.23);
 		  lcd16x2_i2c_setCursor(0,9);
@@ -163,9 +189,9 @@ int main(void)
 		  lcd16x2_i2c_setCursor(1,0);
 		  lcd16x2_i2c_printf("H: %.2f",11.26);
 		  lcd16x2_i2c_setCursor(1,9);
-		  lcd16x2_i2c_printf("C: %d",600);
+		  lcd16x2_i2c_printf("C: %d",C);
 		  lcd = 0;
-	  	  }
+	  }
 
 
     /* USER CODE END WHILE */
@@ -405,6 +431,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
 		  ms++;
+		  CO2ms++;
 		}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
