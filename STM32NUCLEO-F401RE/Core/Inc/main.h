@@ -74,6 +74,12 @@ void Error_Handler(void);
 #define Dig2_GPIO_Port GPIOB
 #define Dig3_Pin GPIO_PIN_2
 #define Dig3_GPIO_Port GPIOB
+#define Switch2_Pin GPIO_PIN_13
+#define Switch2_GPIO_Port GPIOB
+#define Switch2_EXTI_IRQn EXTI15_10_IRQn
+#define Switch1_Pin GPIO_PIN_14
+#define Switch1_GPIO_Port GPIOB
+#define Switch1_EXTI_IRQn EXTI15_10_IRQn
 #define DHT_Pin GPIO_PIN_6
 #define DHT_GPIO_Port GPIOC
 #define CO2_Pin GPIO_PIN_8
