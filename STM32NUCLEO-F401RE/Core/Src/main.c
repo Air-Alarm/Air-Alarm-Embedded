@@ -113,7 +113,7 @@ int TL; // low level output time during cycle
 char CO2_Pin_State= 0;
 char OLD_CO2_Pin_State = 0;
 void check_CO2(){
-	//	int rising_time;
+//	int rising_time;
 //	int falling_time;
 //
 //	int TH; // high level output time during cycle
@@ -205,6 +205,7 @@ int main(void)
 	  	  }
 
 	  if (lcd > 5){
+		  lcd16x2_i2c_clear();
 		  lcd16x2_i2c_setCursor(0,0);
 		  lcd16x2_i2c_printf("T: %.2f",1.23);
 		  lcd16x2_i2c_setCursor(0,9);
@@ -386,8 +387,8 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, A_Pin|B_Pin|C_Pin|D_Pin
@@ -397,7 +398,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, DHT_Pin|Test_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : A_Pin B_Pin C_Pin D_Pin
                            E_Pin F_Pin G_Pin DotT_Pin */
@@ -408,6 +409,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : DUST_Pin CO2_Pin */
+  GPIO_InitStruct.Pin = DUST_Pin|CO2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pins : Dig1_Pin Dig2_Pin Dig3_Pin Dig4_Pin */
   GPIO_InitStruct.Pin = Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -415,14 +422,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PC8 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PC10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10;
+  /*Configure GPIO pins : DHT_Pin Test_Pin */
+  GPIO_InitStruct.Pin = DHT_Pin|Test_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -459,6 +460,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //		}
 
 		if (rising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){ //라이징 엣지
+			CO2ms = 0;
 			rising_time = CO2ms;
 			rising_check = 0;
 			falling_time = 0;
@@ -475,6 +477,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			rerising_time = CO2ms;
 			rerising_check = 0;
 			rising_check = 1;
+
 		}
 
 

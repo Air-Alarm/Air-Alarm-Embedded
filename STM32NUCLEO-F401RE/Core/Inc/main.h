@@ -66,12 +66,18 @@ void Error_Handler(void);
 #define C_GPIO_Port GPIOA
 #define D_Pin GPIO_PIN_7
 #define D_GPIO_Port GPIOA
+#define DUST_Pin GPIO_PIN_5
+#define DUST_GPIO_Port GPIOC
 #define Dig1_Pin GPIO_PIN_0
 #define Dig1_GPIO_Port GPIOB
 #define Dig2_Pin GPIO_PIN_1
 #define Dig2_GPIO_Port GPIOB
 #define Dig3_Pin GPIO_PIN_2
 #define Dig3_GPIO_Port GPIOB
+#define DHT_Pin GPIO_PIN_6
+#define DHT_GPIO_Port GPIOC
+#define CO2_Pin GPIO_PIN_8
+#define CO2_GPIO_Port GPIOC
 #define E_Pin GPIO_PIN_8
 #define E_GPIO_Port GPIOA
 #define F_Pin GPIO_PIN_9
@@ -80,6 +86,8 @@ void Error_Handler(void);
 #define G_GPIO_Port GPIOA
 #define DotT_Pin GPIO_PIN_11
 #define DotT_GPIO_Port GPIOA
+#define Test_Pin GPIO_PIN_10
+#define Test_GPIO_Port GPIOC
 #define Dig4_Pin GPIO_PIN_3
 #define Dig4_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
