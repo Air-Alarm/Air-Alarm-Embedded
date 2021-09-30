@@ -23,6 +23,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd16x2_i2c.h"
+#include "stm32f4xx_hal.h"
+#include <stdio.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,15 +45,18 @@
 /* Private variables ---------------------------------------------------------*/
 I2C_HandleTypeDef hi2c1;
 
+TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim10;
 TIM_HandleTypeDef htim11;
+
+UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 int Seg_Out = 1234; //세그먼트에 표시될 숫자
 uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
-uint8_t lcd = 0;
+uint8_t lcd = -1;
 uint32_t CO2ms = 0;
 /* USER CODE END PV */
 
@@ -60,6 +66,8 @@ static void MX_GPIO_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_TIM10_Init(void);
 static void MX_TIM11_Init(void);
+static void MX_USART2_UART_Init(void);
+static void MX_TIM2_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -112,6 +120,7 @@ int TH; // high level output time during cycle
 int TL; // low level output time during cycle
 char CO2_Pin_State= 0;
 char OLD_CO2_Pin_State = 0;
+int checkms = 0;
 void check_CO2(){
 //	int rising_time;
 //	int falling_time;
@@ -132,6 +141,7 @@ void check_CO2(){
 //
 //	C = 2000*(TH-2)/(TH+TL-4);
 
+
 	TH =  falling_time - rising_time;
 	TL = rerising_time - falling_time;
 	C = 2000*(TH-2)/(TH+TL-4);
@@ -144,6 +154,12 @@ void check_CO2(){
 
 
 }
+
+int _write(int file, char* p, int len) { //printf 사용시 실행
+	HAL_UART_Transmit(&huart2, p, len, 10);
+	return len;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -177,10 +193,13 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM10_Init();
   MX_TIM11_Init();
+  MX_USART2_UART_Init();
+  MX_TIM2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  //HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim10);
   HAL_TIM_Base_Start_IT(&htim11);
   if(lcd16x2_i2c_init(&hi2c1)){
@@ -188,13 +207,18 @@ int main(void)
   }
   lcd16x2_i2c_clear();
   rising_check = 1;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+//	  unsigned char a = '2';
+//
+//	  HAL_UART_Transmit(&huart2, &a, 1, 10);
 
+//	  printf("While Start %d\n\r", checkms);
 	  if (rising_time < falling_time && falling_time < rerising_time){
 		  check_CO2();
 	  }
@@ -204,7 +228,7 @@ int main(void)
 	  		  ms = 0;
 	  	  }
 
-	  if (lcd > 5){
+	  if (lcd > 5 || lcd == -1){
 		  lcd16x2_i2c_clear();
 		  lcd16x2_i2c_setCursor(0,0);
 		  lcd16x2_i2c_printf("T: %.2f",1.23);
@@ -216,6 +240,15 @@ int main(void)
 		  lcd16x2_i2c_printf("C: %d",C);
 		  lcd = 0;
 	  }
+
+
+
+
+
+
+
+
+	  //printf("While End %d\n\r", checkms);
 
 
     /* USER CODE END WHILE */
@@ -241,11 +274,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 8;
   RCC_OscInitStruct.PLL.PLLN = 84;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
@@ -317,6 +351,51 @@ static void MX_I2C1_Init(void)
 }
 
 /**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 10-1;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 85-1;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
+
+}
+
+/**
   * @brief TIM10 Initialization Function
   * @param None
   * @retval None
@@ -365,7 +444,7 @@ static void MX_TIM11_Init(void)
   htim11.Instance = TIM11;
   htim11.Init.Prescaler = 100-1;
   htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim11.Init.Period = 840-1;
+  htim11.Init.Period = 853-1;
   htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim11) != HAL_OK)
@@ -375,6 +454,39 @@ static void MX_TIM11_Init(void)
   /* USER CODE BEGIN TIM11_Init 2 */
 
   /* USER CODE END TIM11_Init 2 */
+
+}
+
+/**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART2_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART2_Init 0 */
+
+  /* USER CODE END USART2_Init 0 */
+
+  /* USER CODE BEGIN USART2_Init 1 */
+
+  /* USER CODE END USART2_Init 1 */
+  huart2.Instance = USART2;
+  huart2.Init.BaudRate = 115200;
+  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.StopBits = UART_STOPBITS_1;
+  huart2.Init.Parity = UART_PARITY_NONE;
+  huart2.Init.Mode = UART_MODE_TX_RX;
+  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART2_Init 2 */
+
+  /* USER CODE END USART2_Init 2 */
 
 }
 
@@ -455,8 +567,14 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
+	if (htim->Instance == TIM2) {
+		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
+
+	    HAL_IncTick();
+	  }
 
 	if(htim->Instance == TIM10){//타이머6 인터럽트 실행(1초)
+
 	  HAL_GPIO_TogglePin(GPIOA, DotT_Pin);
 	  Seg_Out++;
 	  lcd++;
@@ -495,6 +613,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 		ms++;
 		CO2ms++;
+		checkms++;
 		}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
