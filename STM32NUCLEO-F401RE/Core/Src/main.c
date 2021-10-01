@@ -160,6 +160,106 @@ int _write(int file, char* p, int len) { //printf 사용시 실행
 	return len;
 }
 
+
+void delay(uint16_t time){
+	__HAL_TIM_SET_COUNTER(&htim2, 0);
+	while ((__HAL_TIM_GET_COUNTER(&htim2))<time);
+}
+
+uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2;
+uint16_t SUM, RH, TEMP;
+
+float Temperature = 0;
+float Humidity = 0;
+uint8_t Presence = 0;
+
+
+void Set_Pin_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+
+}
+
+
+void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL; //풀업저항 연결 여부 체크 필요
+	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+
+}
+
+
+
+#define DHT22_PORT GPIOC
+#define DHT22_PIN GPIO_PIN_6
+
+
+
+void DHT22_Start(void){
+	Set_Pin_Output(DHT22_PORT, DHT22_PIN);
+	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 0);
+	delay(1200);
+	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 1);
+	delay(20);
+//	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 0);
+
+	Set_Pin_Input(DHT22_PORT, DHT22_PIN);
+
+}
+
+
+
+uint8_t DHT22_Check_Response(void){
+	uint8_t Response = 0;
+	delay(40);
+	if(!(HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))){
+		delay(80);
+
+		if((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))) Response = 1;
+		else Response = -1;
+	}
+
+	while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
+	return Response;
+
+
+}
+
+
+uint8_t DHT22_Read(void){
+	uint i,j;
+
+	for (j = 0; j<8; j++){
+		while(!(HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
+		delay(40);
+
+		if(!(HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)))
+		{
+			i&= ~(1<<(7-j));
+		}
+		else i|= (i<<(7-j));
+
+		while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
+
+
+	}
+
+	return i;
+
+}
+
+
+
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -199,7 +299,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  //HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim10);
   HAL_TIM_Base_Start_IT(&htim11);
   if(lcd16x2_i2c_init(&hi2c1)){
@@ -219,30 +319,48 @@ int main(void)
 //	  HAL_UART_Transmit(&huart2, &a, 1, 10);
 
 //	  printf("While Start %d\n\r", checkms);
-	  if (rising_time < falling_time && falling_time < rerising_time){
-		  check_CO2();
-	  }
-
-	  if (ms > 1){
-	  		  Segment();//3ms마다 세븐세그먼트를 출력
-	  		  ms = 0;
-	  	  }
-
-	  if (lcd > 5 || lcd == -1){
-		  lcd16x2_i2c_clear();
-		  lcd16x2_i2c_setCursor(0,0);
-		  lcd16x2_i2c_printf("T: %.2f",1.23);
-		  lcd16x2_i2c_setCursor(0,9);
-		  lcd16x2_i2c_printf("D: %.2f",1.24);
-		  lcd16x2_i2c_setCursor(1,0);
-		  lcd16x2_i2c_printf("H: %.2f",11.26);
-		  lcd16x2_i2c_setCursor(1,9);
-		  lcd16x2_i2c_printf("C: %d",C);
-		  lcd = 0;
-	  }
 
 
 
+
+//	  if (rising_time < falling_time && falling_time < rerising_time){
+//		  check_CO2();
+//	  }
+//
+//	  if (ms > 1){
+//	  		  Segment();//3ms마다 세븐세그먼트를 출력
+//	  		  ms = 0;
+//	  	  }
+//
+//	  if (lcd > 5 || lcd == -1){
+//		  lcd16x2_i2c_clear();
+//		  lcd16x2_i2c_setCursor(0,0);
+//		  lcd16x2_i2c_printf("T: %.2f",1.23);
+//		  lcd16x2_i2c_setCursor(0,9);
+//		  lcd16x2_i2c_printf("D: %.2f",1.24);
+//		  lcd16x2_i2c_setCursor(1,0);
+//		  lcd16x2_i2c_printf("H: %.2f",11.26);
+//		  lcd16x2_i2c_setCursor(1,9);
+//		  lcd16x2_i2c_printf("C: %d",C);
+//		  lcd = 0;
+//	  }
+//
+
+	  DHT22_Start();
+	  Presence = DHT22_Check_Response();
+	  Rh_byte1 = DHT22_Read();
+	  Rh_byte2 = DHT22_Read();
+	  Temp_byte1 = DHT22_Read();
+	  Temp_byte2 = DHT22_Read();
+	  SUM = DHT22_Read();
+
+	  TEMP = ((Temp_byte1 << 8)|Temp_byte2);
+	  RH = ((Rh_byte1 << 8)|Rh_byte2);
+
+	  Temperature = (float) (TEMP/10.0);
+	  Humidity = (float) (RH/10.0);
+
+	  HAL_Delay(3000);
 
 
 
@@ -369,9 +487,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 10-1;
+  htim2.Init.Prescaler = 84-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 85-1;
+  htim2.Init.Period = 0xffff-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -444,7 +562,7 @@ static void MX_TIM11_Init(void)
   htim11.Instance = TIM11;
   htim11.Init.Prescaler = 100-1;
   htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim11.Init.Period = 853-1;
+  htim11.Init.Period = 840-1;
   htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim11) != HAL_OK)
@@ -568,7 +686,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM2) {
-		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
+//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
 
 	    HAL_IncTick();
 	  }
