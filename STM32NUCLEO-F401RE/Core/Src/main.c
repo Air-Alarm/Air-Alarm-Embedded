@@ -60,7 +60,10 @@ uint8_t ms = 0;
 uint8_t lcd = -1;
 char DHT22_Loop_Time = 0;
 uint32_t CO2ms = 0;
-char humistr[17];
+char Line1[17];
+char Line2[17];
+float temp = 0;
+float humi = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -124,6 +127,7 @@ uint32_t TL; // low level output time during cycle
 char CO2_Pin_State= 0;
 char OLD_CO2_Pin_State = 0;
 int checkms = 0;
+
 void check_CO2(){
 //	int rising_time;
 //	int falling_time;
@@ -237,24 +241,19 @@ int main(void)
 	  		  Segment();//3ms마다 세븐세그먼트를 출력
 	  		  ms = 0;
 	  	  }
+
+
+
 	  DHT_data d = DHT_getData(&bedRoom);
-	  if(DHT22_Loop_Time == 1){
 //	  char msg[40];
-
-
 //	  sprintf(msg, "\fTemp %2.1f°C, Hum %2.1f%%\n\r", d.temp, d.hum);
-
 //	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
 
 
-	  }
-
 	  if (lcd > 2){
-		  char Line1[17];
-		  char Line2[17];
 		  sprintf(Line1, "T: %2.1f  D: %d", d.temp, 123);
 		  sprintf(Line2, "H: %2.1f  C: %d", d.hum, C);
-		  lcd16x2_i2c_clear();
+//		  lcd16x2_i2c_clear();
 		  lcd16x2_i2c_setCursor(0,0);
 		  lcd16x2_i2c_printf(Line1);
 		  lcd16x2_i2c_setCursor(1,0);

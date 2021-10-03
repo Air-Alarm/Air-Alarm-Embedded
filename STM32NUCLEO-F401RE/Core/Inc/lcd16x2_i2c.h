@@ -249,7 +249,7 @@ void lcd16x2_i2c_cursorShow(bool state)
 void lcd16x2_i2c_clear(void)
 {
   lcd16x2_i2c_sendCommand(LCD_CLEARDISPLAY);
-  HAL_Delay(3);
+  HAL_Delay(1);
 }
 
 /**
