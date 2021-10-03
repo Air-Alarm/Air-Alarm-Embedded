@@ -109,15 +109,15 @@ void Segment() {
 	}
 
 }
-int C; //CO2 level
+uint32_t C; //CO2 level
 int rising_time;
 int falling_time;
 int rerising_time;
 char rising_check = 0;
 char falling_check = 0;
 char rerising_check = 0;
-int TH; // high level output time during cycle
-int TL; // low level output time during cycle
+uint32_t TH; // high level output time during cycle
+uint32_t TL; // low level output time during cycle
 char CO2_Pin_State= 0;
 char OLD_CO2_Pin_State = 0;
 int checkms = 0;
@@ -146,7 +146,6 @@ void check_CO2(){
 	TL = rerising_time - falling_time;
 	C = 2000*(TH-2)/(TH+TL-4);
 
-	int a = 0;
 	rising_time = 0;
 	falling_time  = 0;
 	rerising_time = 0;
@@ -190,7 +189,7 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 	GPIO_InitStruct.Pin = GPIO_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_NOPULL; //풀업저항 연결 여부 체크 필요
+	GPIO_InitStruct.Pull = GPIO_PULLDOWN; //풀업저항 연결 여부 체크 필요
 	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
 
 }
@@ -204,8 +203,13 @@ void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
 
 void DHT22_Start(void){
 	Set_Pin_Output(DHT22_PORT, DHT22_PIN);
+	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 1);
+	HAL_Delay(30);
+
+
+
 	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 0);
-	delay(1200);
+	delay(18000);
 	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 1);
 	delay(20);
 //	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 0);
@@ -226,7 +230,7 @@ uint8_t DHT22_Check_Response(void){
 		else Response = -1;
 	}
 
-	while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
+//	while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
 	return Response;
 
 
@@ -246,7 +250,7 @@ uint8_t DHT22_Read(void){
 		}
 		else i|= (i<<(7-j));
 
-		while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
+//		while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
 
 
 	}
@@ -332,7 +336,7 @@ int main(void)
 //	  		  ms = 0;
 //	  	  }
 //
-//	  if (lcd > 5 || lcd == -1){
+//	  if (lcd > 1 || lcd == -1){
 //		  lcd16x2_i2c_clear();
 //		  lcd16x2_i2c_setCursor(0,0);
 //		  lcd16x2_i2c_printf("T: %.2f",1.23);
@@ -344,14 +348,19 @@ int main(void)
 //		  lcd16x2_i2c_printf("C: %d",C);
 //		  lcd = 0;
 //	  }
-//
+
+
+
+
+
 
 	  DHT22_Start();
 	  Presence = DHT22_Check_Response();
-	  Rh_byte1 = DHT22_Read();
-	  Rh_byte2 = DHT22_Read();
 	  Temp_byte1 = DHT22_Read();
 	  Temp_byte2 = DHT22_Read();
+	  Rh_byte1 = DHT22_Read();
+	  Rh_byte2 = DHT22_Read();
+
 	  SUM = DHT22_Read();
 
 	  TEMP = ((Temp_byte1 << 8)|Temp_byte2);
@@ -359,8 +368,6 @@ int main(void)
 
 	  Temperature = (float) (TEMP/10.0);
 	  Humidity = (float) (RH/10.0);
-
-	  HAL_Delay(3000);
 
 
 
@@ -699,6 +706,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
+		ms++;
+		CO2ms++;
+		checkms++;
 		CO2_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
 //		if (CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 0){
 //			rising_check = 1;
@@ -718,6 +728,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			rerising_time = 0;
 			rerising_check = 1;
 		}
+
 		if (rerising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){
 			rerising_time = CO2ms;
 			rerising_check = 0;
@@ -729,9 +740,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 		OLD_CO2_Pin_State = CO2_Pin_State;
 
-		ms++;
-		CO2ms++;
-		checkms++;
+
 		}
   /* USER CODE END Callback 0 */
   if (htim->Instance == TIM1) {
