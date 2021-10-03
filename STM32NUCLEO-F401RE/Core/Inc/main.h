@@ -80,8 +80,6 @@ void Error_Handler(void);
 #define Switch1_Pin GPIO_PIN_14
 #define Switch1_GPIO_Port GPIOB
 #define Switch1_EXTI_IRQn EXTI15_10_IRQn
-#define DHT_Pin GPIO_PIN_6
-#define DHT_GPIO_Port GPIOC
 #define CO2_Pin GPIO_PIN_8
 #define CO2_GPIO_Port GPIOC
 #define E_Pin GPIO_PIN_8

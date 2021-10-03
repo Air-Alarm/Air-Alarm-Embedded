@@ -22,9 +22,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "DHT.h"
 #include <stdio.h>
 #include <string.h>
+#include "DHT.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,7 +91,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  static DHT_sensor bedRoom = {GPIOA, GPIO_PIN_1, DHT22, 1};
+  static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22, 1};
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -25,7 +25,8 @@
 #include "lcd16x2_i2c.h"
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
-
+#include "DHT.h"
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +58,9 @@ uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
 uint8_t lcd = -1;
+char DHT22_Loop_Time = 0;
 uint32_t CO2ms = 0;
+char humistr[17];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,7 +112,7 @@ void Segment() {
 	}
 
 }
-uint32_t C; //CO2 level
+int C; //CO2 level
 int rising_time;
 int falling_time;
 int rerising_time;
@@ -154,114 +157,10 @@ void check_CO2(){
 
 }
 
-int _write(int file, char* p, int len) { //printf 사용시 실행
-	HAL_UART_Transmit(&huart2, p, len, 10);
-	return len;
-}
-
-
-void delay(uint16_t time){
-	__HAL_TIM_SET_COUNTER(&htim2, 0);
-	while ((__HAL_TIM_GET_COUNTER(&htim2))<time);
-}
-
-uint8_t Rh_byte1, Rh_byte2, Temp_byte1, Temp_byte2;
-uint16_t SUM, RH, TEMP;
-
-float Temperature = 0;
-float Humidity = 0;
-uint8_t Presence = 0;
-
-
-void Set_Pin_Output(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
-{
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = GPIO_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
-
-}
-
-
-void Set_Pin_Input(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
-{
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = GPIO_Pin;
-	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN; //풀업저항 연결 여부 체크 필요
-	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
-
-}
-
-
-
-#define DHT22_PORT GPIOC
-#define DHT22_PIN GPIO_PIN_6
-
-
-
-void DHT22_Start(void){
-	Set_Pin_Output(DHT22_PORT, DHT22_PIN);
-	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 1);
-	HAL_Delay(30);
-
-
-
-	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 0);
-	delay(18000);
-	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 1);
-	delay(20);
-//	HAL_GPIO_WritePin(DHT22_PORT, DHT22_PIN, 0);
-
-	Set_Pin_Input(DHT22_PORT, DHT22_PIN);
-
-}
-
-
-
-uint8_t DHT22_Check_Response(void){
-	uint8_t Response = 0;
-	delay(40);
-	if(!(HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))){
-		delay(80);
-
-		if((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN))) Response = 1;
-		else Response = -1;
-	}
-
-//	while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
-	return Response;
-
-
-}
-
-
-uint8_t DHT22_Read(void){
-	uint i,j;
-
-	for (j = 0; j<8; j++){
-		while(!(HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
-		delay(40);
-
-		if(!(HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)))
-		{
-			i&= ~(1<<(7-j));
-		}
-		else i|= (i<<(7-j));
-
-//		while((HAL_GPIO_ReadPin(DHT22_PORT, DHT22_PIN)));
-
-
-	}
-
-	return i;
-
-}
-
-
-
-
+//int _write(int file, char* p, int len) { //printf 사용시 실행
+//	HAL_UART_Transmit(&huart2, p, len, 10);
+//	return len;
+//}
 
 
 /* USER CODE END 0 */
@@ -310,7 +209,10 @@ int main(void)
  	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
   }
   lcd16x2_i2c_clear();
+  lcd16x2_i2c_clear();
+  lcd16x2_i2c_clear();
   rising_check = 1;
+  static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22, 1};//dht22 핀 설정
 
   /* USER CODE END 2 */
 
@@ -327,47 +229,44 @@ int main(void)
 
 
 
-//	  if (rising_time < falling_time && falling_time < rerising_time){
-//		  check_CO2();
-//	  }
-//
-//	  if (ms > 1){
-//	  		  Segment();//3ms마다 세븐세그먼트를 출력
-//	  		  ms = 0;
-//	  	  }
-//
-//	  if (lcd > 1 || lcd == -1){
-//		  lcd16x2_i2c_clear();
-//		  lcd16x2_i2c_setCursor(0,0);
-//		  lcd16x2_i2c_printf("T: %.2f",1.23);
-//		  lcd16x2_i2c_setCursor(0,9);
-//		  lcd16x2_i2c_printf("D: %.2f",1.24);
-//		  lcd16x2_i2c_setCursor(1,0);
-//		  lcd16x2_i2c_printf("H: %.2f",11.26);
-//		  lcd16x2_i2c_setCursor(1,9);
-//		  lcd16x2_i2c_printf("C: %d",C);
-//		  lcd = 0;
-//	  }
+	  if (rising_time < falling_time && falling_time < rerising_time){
+		  check_CO2();
+	  }
+
+	  if (ms > 1){
+	  		  Segment();//3ms마다 세븐세그먼트를 출력
+	  		  ms = 0;
+	  	  }
+	  DHT_data d = DHT_getData(&bedRoom);
+	  if(DHT22_Loop_Time == 1){
+//	  char msg[40];
+
+
+//	  sprintf(msg, "\fTemp %2.1f°C, Hum %2.1f%%\n\r", d.temp, d.hum);
+
+//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
+
+
+	  }
+
+	  if (lcd > 2){
+		  char Line1[17];
+		  char Line2[17];
+		  sprintf(Line1, "T: %2.1f  D: %d", d.temp, 123);
+		  sprintf(Line2, "H: %2.1f  C: %d", d.hum, C);
+		  lcd16x2_i2c_clear();
+		  lcd16x2_i2c_setCursor(0,0);
+		  lcd16x2_i2c_printf(Line1);
+		  lcd16x2_i2c_setCursor(1,0);
+		  lcd16x2_i2c_printf(Line2);
+		  lcd = 0;
+	  }
 
 
 
 
 
 
-	  DHT22_Start();
-	  Presence = DHT22_Check_Response();
-	  Temp_byte1 = DHT22_Read();
-	  Temp_byte2 = DHT22_Read();
-	  Rh_byte1 = DHT22_Read();
-	  Rh_byte2 = DHT22_Read();
-
-	  SUM = DHT22_Read();
-
-	  TEMP = ((Temp_byte1 << 8)|Temp_byte2);
-	  RH = ((Rh_byte1 << 8)|Rh_byte2);
-
-	  Temperature = (float) (TEMP/10.0);
-	  Humidity = (float) (RH/10.0);
 
 
 
@@ -638,7 +537,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, DHT_Pin|Test_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6|Test_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : A_Pin B_Pin C_Pin D_Pin
                            E_Pin F_Pin G_Pin DotT_Pin */
@@ -668,8 +567,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DHT_Pin Test_Pin */
-  GPIO_InitStruct.Pin = DHT_Pin|Test_Pin;
+  /*Configure GPIO pins : PC6 Test_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_6|Test_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -701,6 +600,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM10){//타이머6 인터럽트 실행(1초)
 
 	  HAL_GPIO_TogglePin(GPIOA, DotT_Pin);
+	  DHT22_Loop_Time++;
 	  Seg_Out++;
 	  lcd++;
 
