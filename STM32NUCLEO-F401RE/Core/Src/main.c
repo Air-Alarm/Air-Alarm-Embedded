@@ -53,12 +53,31 @@ TIM_HandleTypeDef htim11;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+
+int C; //CO2 level
+int CO2_Rising_Time;
+int CO2_Falling_Time;
+int CO2_ReRising_Time;
+char rising_check = 0;
+char falling_check = 0;
+char rerising_check = 0;
+uint32_t TH; // high level output time during cycle
+uint32_t TL; // low level output time during cycle
+char CO2_Pin_State= 0;
+char OLD_CO2_Pin_State = 0;
+int checkms = 0;
+char Dustms = 0;
 int Seg_Out = 1234; //세그먼트에 표시될 숫자
 uint8_t rx2_data;
 uint8_t buff[10];//uart 입력 버퍼
 uint8_t ms = 0;
 uint8_t lcd = -1;
 char DHT22_Loop_Time = 0;
+char Uart_Loop_Time = 0;
+char Dust_Loop_Time = 0;
+int Dust_Rising_Time = 0;
+int Dust_Falling_Time = 0;
+
 uint32_t CO2ms = 0;
 char Line1[17];
 char Line2[17];
@@ -115,56 +134,61 @@ void Segment() {
 	}
 
 }
-int C; //CO2 level
-int rising_time;
-int falling_time;
-int rerising_time;
-char rising_check = 0;
-char falling_check = 0;
-char rerising_check = 0;
-uint32_t TH; // high level output time during cycle
-uint32_t TL; // low level output time during cycle
-char CO2_Pin_State= 0;
-char OLD_CO2_Pin_State = 0;
-int checkms = 0;
+
 
 void check_CO2(){
 //	int rising_time;
-//	int falling_time;
+//	int CO2_Falling_Time;
 //
 //	int TH; // high level output time during cycle
 //	int TL; // low level output time during cycle
 //	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
 //	rising_time = CO2ms;
 //	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
-//	falling_time = CO2ms;
-//	TH = rising_time - falling_time;
+//	CO2_Falling_Time = CO2ms;
+//	TH = rising_time - CO2_Falling_Time;
 //
 //	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
-//	falling_time = CO2ms;
+//	CO2_Falling_Time = CO2ms;
 //	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
 //	rising_time = CO2ms;
-//	TL = rising_time - falling_time;
+//	TL = rising_time - CO2_Falling_Time;
 //
 //	C = 2000*(TH-2)/(TH+TL-4);
 
 
-	TH =  falling_time - rising_time;
-	TL = rerising_time - falling_time;
+	TH =  CO2_Falling_Time - CO2_Rising_Time;
+	TL = CO2_ReRising_Time - CO2_Falling_Time;
 	C = 2000*(TH-2)/(TH+TL-4);
 
-	rising_time = 0;
-	falling_time  = 0;
-	rerising_time = 0;
+	CO2_Rising_Time = 0;
+	CO2_Falling_Time  = 0;
+	CO2_ReRising_Time = 0;
 
 
 
 }
 
-//int _write(int file, char* p, int len) { //printf 사용시 실행
-//	HAL_UART_Transmit(&huart2, p, len, 10);
-//	return len;
-//}
+
+
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+
+	switch(GPIO_Pin){
+
+	case DUST_Pin:
+		if(HAL_GPIO_ReadPin(GPIOC, DUST_Pin)){
+			Dust_Rising_Time = Dustms;
+		}
+		if(!(HAL_GPIO_ReadPin(GPIOC, DUST_Pin))){
+			Dust_Falling_Time = Dustms;
+		}
+
+	}
+}
+
 
 
 /* USER CODE END 0 */
@@ -233,7 +257,7 @@ int main(void)
 
 
 
-	  if (rising_time < falling_time && falling_time < rerising_time){
+	  if (CO2_Rising_Time < CO2_Falling_Time && CO2_Falling_Time < CO2_ReRising_Time){
 		  check_CO2();
 	  }
 
@@ -262,13 +286,12 @@ int main(void)
 	  }
 
 
-
-
-
-
-
-
-
+	  if(Uart_Loop_Time >= 10){
+		  	  char msg[40];
+		  	  sprintf(msg, "W:%d,T:%2.1f,H:%2.1f\n\r", Seg_Out,d.temp, d.hum);
+		  	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
+		  	  Uart_Loop_Time = 0;
+	  }
 
 
 	  //printf("While End %d\n\r", checkms);
@@ -392,9 +415,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 84-1;
+  htim2.Init.Prescaler = 100-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 0xffff-1;
+  htim2.Init.Period = 840-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -547,11 +570,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DUST_Pin CO2_Pin */
-  GPIO_InitStruct.Pin = DUST_Pin|CO2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pin : DUST_Pin */
+  GPIO_InitStruct.Pin = DUST_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(DUST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Dig1_Pin Dig2_Pin Dig3_Pin Dig4_Pin */
   GPIO_InitStruct.Pin = Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin;
@@ -573,6 +596,16 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : CO2_Pin */
+  GPIO_InitStruct.Pin = CO2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(CO2_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
@@ -591,7 +624,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM2) {
-//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
+		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
 
 	    HAL_IncTick();
 	  }
@@ -600,11 +633,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	  HAL_GPIO_TogglePin(GPIOA, DotT_Pin);
 	  DHT22_Loop_Time++;
+	  Uart_Loop_Time++;
+
 	  Seg_Out++;
 	  lcd++;
 
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
+		Dustms++;
 		ms++;
 		CO2ms++;
 		checkms++;
@@ -615,21 +651,21 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 		if (rising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){ //라이징 엣지
 			CO2ms = 0;
-			rising_time = CO2ms;
+			CO2_Rising_Time = CO2ms;
 			rising_check = 0;
-			falling_time = 0;
+			CO2_Falling_Time = 0;
 			falling_check = 1;
 		}
 
 		if (falling_check && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 0){ //폴링 엣지
 			falling_check = 0;
-			falling_time = CO2ms;
-			rerising_time = 0;
+			CO2_Falling_Time = CO2ms;
+			CO2_ReRising_Time = 0;
 			rerising_check = 1;
 		}
 
 		if (rerising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){
-			rerising_time = CO2ms;
+			CO2_ReRising_Time = CO2ms;
 			rerising_check = 0;
 			rising_check = 1;
 
