@@ -66,9 +66,6 @@ void Error_Handler(void);
 #define C_GPIO_Port GPIOA
 #define D_Pin GPIO_PIN_7
 #define D_GPIO_Port GPIOA
-#define DUST_Pin GPIO_PIN_5
-#define DUST_GPIO_Port GPIOC
-#define DUST_EXTI_IRQn EXTI9_5_IRQn
 #define Dig1_Pin GPIO_PIN_0
 #define Dig1_GPIO_Port GPIOB
 #define Dig2_Pin GPIO_PIN_1

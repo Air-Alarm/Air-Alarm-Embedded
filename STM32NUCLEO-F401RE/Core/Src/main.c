@@ -54,33 +54,37 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
-int C; //CO2 level
-int CO2_Rising_Time;
-int CO2_Falling_Time;
-int CO2_ReRising_Time;
+
+
+
+
+char Line1[17];
+char Line2[17];
 char rising_check = 0;
 char falling_check = 0;
 char rerising_check = 0;
-uint32_t TH; // high level output time during cycle
-uint32_t TL; // low level output time during cycle
-char CO2_Pin_State= 0;
-char OLD_CO2_Pin_State = 0;
-int checkms = 0;
-char Dustms = 0;
-int Seg_Out = 1234; //세그먼트에 표시될 숫자
-uint8_t rx2_data;
-uint8_t buff[10];//uart 입력 버퍼
-uint8_t ms = 0;
-uint8_t lcd = -1;
 char DHT22_Loop_Time = 0;
 char Uart_Loop_Time = 0;
 char Dust_Loop_Time = 0;
+char CO2_Pin_State= 0;
+char OLD_CO2_Pin_State = 0;
+char ms = 0;//세그먼트 시간 카운트
+char lcd = -1;
+
+int CO2ms = 0;//CO2 PWM 시간 기록 카운트 자료형 바꾸면 안됨.
+int C; //CO2 value
+int CO2_Rising_Time;
+int CO2_Falling_Time;
+int CO2_ReRising_Time;
+int TH; // high level output time during cycle
+int TL; // low level output time during cycle
+int checkms = 0;
+int Dustms = 0;
+int Seg_Out = 1234; //세그먼트에 표시될 숫자
+int rx2_data;
 int Dust_Rising_Time = 0;
 int Dust_Falling_Time = 0;
 
-uint32_t CO2ms = 0;
-char Line1[17];
-char Line2[17];
 float temp = 0;
 float humi = 0;
 /* USER CODE END PV */
@@ -137,28 +141,23 @@ void Segment() {
 
 
 void check_CO2(){
-//	int rising_time;
-//	int CO2_Falling_Time;
-//
-//	int TH; // high level output time during cycle
-//	int TL; // low level output time during cycle
-//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
-//	rising_time = CO2ms;
-//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
-//	CO2_Falling_Time = CO2ms;
-//	TH = rising_time - CO2_Falling_Time;
-//
-//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 1);
-//	CO2_Falling_Time = CO2ms;
-//	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8) == 0);
-//	rising_time = CO2ms;
-//	TL = rising_time - CO2_Falling_Time;
-//
-//	C = 2000*(TH-2)/(TH+TL-4);
-
+	int CO2_Cycle = 0;
+	int gap = 0;
+	float Fgap = 0;
 
 	TH =  CO2_Falling_Time - CO2_Rising_Time;
 	TL = CO2_ReRising_Time - CO2_Falling_Time;
+
+
+	CO2_Cycle = TH+TL;
+	gap = CO2_Cycle - 1004;
+	Fgap = ((float)gap / 1004);
+
+	TL = TL + (TL*Fgap);
+	TH = TH + (TH*Fgap);
+
+
+
 	C = 2000*(TH-2)/(TH+TL-4);
 
 	CO2_Rising_Time = 0;
@@ -173,22 +172,22 @@ void check_CO2(){
 
 
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-
-	switch(GPIO_Pin){
-
-	case DUST_Pin:
-		if(HAL_GPIO_ReadPin(GPIOC, DUST_Pin)){
-			Dust_Rising_Time = Dustms;
-		}
-		if(!(HAL_GPIO_ReadPin(GPIOC, DUST_Pin))){
-			Dust_Falling_Time = Dustms;
-		}
-
-	}
-}
-
+//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+//{
+//
+//	switch(GPIO_Pin){
+//
+//	case DUST_Pin:
+//		if(HAL_GPIO_ReadPin(GPIOC, DUST_Pin)){
+//			Dust_Rising_Time = Dustms;
+//		}
+//		if(!(HAL_GPIO_ReadPin(GPIOC, DUST_Pin))){
+//			Dust_Falling_Time = Dustms;
+//		}
+//
+//	}
+//}
+//
 
 
 /* USER CODE END 0 */
@@ -415,9 +414,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 100-1;
+  htim2.Init.Prescaler = 84-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 840-1;
+  htim2.Init.Period = 0xffff-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -570,11 +569,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : DUST_Pin */
-  GPIO_InitStruct.Pin = DUST_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  /*Configure GPIO pin : PC5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(DUST_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Dig1_Pin Dig2_Pin Dig3_Pin Dig4_Pin */
   GPIO_InitStruct.Pin = Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin;
@@ -599,12 +598,8 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin : CO2_Pin */
   GPIO_InitStruct.Pin = CO2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(CO2_GPIO_Port, &GPIO_InitStruct);
-
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
@@ -624,7 +619,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM2) {
-		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
+//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
 
 	    HAL_IncTick();
 	  }
@@ -664,7 +659,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			rerising_check = 1;
 		}
 
-		if (rerising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1){
+		if (rerising_check == 1 && CO2_Pin_State != OLD_CO2_Pin_State && CO2_Pin_State == 1&&CO2ms > 1000){
 			CO2_ReRising_Time = CO2ms;
 			rerising_check = 0;
 			rising_check = 1;
