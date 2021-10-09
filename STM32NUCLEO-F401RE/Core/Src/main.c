@@ -239,7 +239,7 @@ int main(void)
   lcd16x2_i2c_clear();
   lcd16x2_i2c_clear();
   rising_check = 1;
-  static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22, 1};//dht22 핀 설정
+  static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22};//dht22 핀 설정
 
   /* USER CODE END 2 */
 
