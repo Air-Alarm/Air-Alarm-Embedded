@@ -159,17 +159,41 @@ void check_CO2(){
 
 
 	C = 2000*(TH-2)/(TH+TL-4);
+	C = C + (Fgap*C);
+//	if (C > 2000){
+//		CO2_Rising_Time = 0;
+//		CO2_Falling_Time  = 0;
+//		CO2_ReRising_Time = 0;
+//
+//		rising_check = 1;
+//		falling_check = 0;
+//		rerising_check = 0;
+//	}
 
 	CO2_Rising_Time = 0;
 	CO2_Falling_Time  = 0;
 	CO2_ReRising_Time = 0;
-
+	rising_check = 1;
+	falling_check = 0;
+	rerising_check = 0;
 
 
 }
 
 
+void LCD_Load_Print(){
 
+
+	  sprintf(Line1, "T: Loading...");
+	  sprintf(Line2, "H: Loading...");
+	  lcd16x2_i2c_clear();
+	  lcd16x2_i2c_setCursor(0,0);
+	  lcd16x2_i2c_printf(Line1);
+	  lcd16x2_i2c_setCursor(1,0);
+	  lcd16x2_i2c_printf(Line2);
+	  lcd = 0;
+
+}
 
 
 //void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
@@ -240,7 +264,8 @@ int main(void)
   lcd16x2_i2c_clear();
   rising_check = 1;
   static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22};//dht22 핀 설정
-
+  LCD_Load_Print();
+  DHT_data d = DHT_getData(&bedRoom);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -267,13 +292,13 @@ int main(void)
 
 
 
-	  DHT_data d = DHT_getData(&bedRoom);
 //	  char msg[40];
 //	  sprintf(msg, "\fTemp %2.1f°C, Hum %2.1f%%\n\r", d.temp, d.hum);
 //	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
 
 
 	  if (lcd > 2){
+		  DHT_data d = DHT_getData(&bedRoom);
 		  sprintf(Line1, "T: %2.1f  D: %d", d.temp, 123);
 		  sprintf(Line2, "H: %2.1f  C: %d", d.hum, C);
 //		  lcd16x2_i2c_clear();

@@ -8,4 +8,4 @@ org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:STM32NUCLEO-F401RE\ Debug/activ
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:STM32NUCLEO-L432KC\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:STM32NUCLEO-L432KC\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:STM32Test\ Debug/activeLaunchMode=run
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:STM32_Test\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:STM32_Test\ Debug/activeLaunchMode=debug

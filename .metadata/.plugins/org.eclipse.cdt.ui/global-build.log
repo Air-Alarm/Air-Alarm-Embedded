@@ -1,18 +1,48 @@
-03:26:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+03:35:40 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'LCD_Load_Print':
+../Core/Src/main.c:187:37: warning: 'sprintf' writing a terminating nul past the end of the destination [-Wformat-overflow=]
+  187 |    sprintf(Line1, "T:Load.. D:Load..");
+      |                                     ^
+../Core/Src/main.c:187:4: note: 'sprintf' output 18 bytes into a destination of size 17
+  187 |    sprintf(Line1, "T:Load.. D:Load..");
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:188:37: warning: 'sprintf' writing a terminating nul past the end of the destination [-Wformat-overflow=]
+  188 |    sprintf(Line2, "H:Load.. C:Load..");
+      |                                     ^
+../Core/Src/main.c:188:4: note: 'sprintf' output 18 bytes into a destination of size 17
+  188 |    sprintf(Line2, "H:Load.. C:Load..");
+      |    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-F401RE.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
+   text	   data	    bss	    dec	    hex	filename
+  37044	    500	   2140	  39684	   9b04	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-F401RE.bin
+ 
+Finished building: STM32NUCLEO-F401RE.list
+ 
+03:36:03 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
    text	   data	    bss	    dec	    hex	filename
-  36932	    512	   2152	  39596	   9aac	STM32NUCLEO-F401RE.elf
+  37044	    500	   2140	  39684	   9b04	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
-03:26:11 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+03:36:12 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
    text	   data	    bss	    dec	    hex	filename
-  36932	    512	   2152	  39596	   9aac	STM32NUCLEO-F401RE.elf
+  37044	    500	   2140	  39684	   9b04	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
-03:26:45 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+03:36:34 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -22,14 +52,14 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  36868	    512	   2144	  39524	   9a64	STM32NUCLEO-F401RE.elf
+  37044	    500	   2140	  39684	   9b04	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-03:27:30 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+03:37:04 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -39,152 +69,14 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  36860	    512	   2144	  39516	   9a5c	STM32NUCLEO-F401RE.elf
+  37036	    500	   2140	  39676	   9afc	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-03:29:05 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o"
-arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_timebase_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_hal_timebase_tim.d" -MT"Core/Src/stm32f4xx_hal_timebase_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_timebase_tim.o"
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
-arm-none-eabi-gcc "../Core/Src/system_stm32f4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/system_stm32f4xx.d" -MT"Core/Src/system_stm32f4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32f4xx.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36812	    512	   2144	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:30:09 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36812	    512	   2144	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-03:30:13 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36812	    512	   2144	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-03:45:13 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:141:6: warning: unused variable 'CO2_Cycle_Error_Range' [-Wunused-variable]
-  141 |  int CO2_Cycle_Error_Range = CO2_Cycle-1004;
-      |      ^~~~~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36836	    512	   2144	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
-Finished building: STM32NUCLEO-F401RE.bin
- 
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:46:27 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:147:6: warning: unused variable 'CO2_Cycle_Error_Range' [-Wunused-variable]
-  147 |  int CO2_Cycle_Error_Range = CO2_Cycle - 1004;
-      |      ^~~~~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36836	    512	   2144	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:47:58 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:147:6: warning: unused variable 'CO2_Cycle_Error_Range' [-Wunused-variable]
-  147 |  int CO2_Cycle_Error_Range = (CO2_Cycle - 1004) / 1004;
-      |      ^~~~~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36852	    512	   2144	  39508	   9a54	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:48:45 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:147:8: warning: unused variable 'CO2_Cycle_Error_Range' [-Wunused-variable]
-  147 |  float CO2_Cycle_Error_Range = (CO2_Cycle - 1004) / 1004;
-      |        ^~~~~~~~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36860	    512	   2144	  39516	   9a5c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:49:48 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+03:37:24 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -194,628 +86,14 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  36876	    512	   2144	  39532	   9a6c	STM32NUCLEO-F401RE.elf
+  37036	    500	   2140	  39676	   9afc	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-03:50:48 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36860	    512	   2144	  39516	   9a5c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:52:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36884	    512	   2144	  39540	   9a74	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:53:58 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-../Core/Src/main.c:146:6: warning: unused variable 'CO2_Cycle' [-Wunused-variable]
-  146 |  int CO2_Cycle = TH+TL;
-      |      ^~~~~~~~~
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36828	    512	   2144	  39484	   9a3c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:59:22 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:150:6: warning: unused variable 'CO2_Cycle' [-Wunused-variable]
-  150 |  int CO2_Cycle = TH+TL;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36820	    512	   2136	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-03:59:37 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36820	    512	   2136	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-04:00:11 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36820	    512	   2136	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-04:01:34 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36836	    512	   2136	  39484	   9a3c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:02:47 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:05:18 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:06:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:11:14 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36820	    512	   2136	  39468	   9a2c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:14:30 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o"
-arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_timebase_tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_hal_timebase_tim.d" -MT"Core/Src/stm32f4xx_hal_timebase_tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_timebase_tim.o"
-arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
-arm-none-eabi-gcc "../Core/Src/system_stm32f4xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/system_stm32f4xx.d" -MT"Core/Src/system_stm32f4xx.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/system_stm32f4xx.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:18:24 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-04:20:28 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-07:49:59 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-08:04:48 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:145:6: warning: variable 'CO2_Cycle_Error' set but not used [-Wunused-but-set-variable]
-  145 |  int CO2_Cycle_Error;
-      |      ^~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36852	    512	   2136	  39500	   9a4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-08:05:45 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:145:6: warning: variable 'CO2_Cycle_Error' set but not used [-Wunused-but-set-variable]
-  145 |  int CO2_Cycle_Error = 0;
-      |      ^~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36852	    512	   2136	  39500	   9a4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-08:06:42 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:145:8: warning: variable 'CO2_Cycle_Error' set but not used [-Wunused-but-set-variable]
-  145 |  float CO2_Cycle_Error = 0;
-      |        ^~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36884	    512	   2136	  39532	   9a6c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-08:07:25 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:145:8: warning: variable 'CO2_Cycle_Error' set but not used [-Wunused-but-set-variable]
-  145 |  float CO2_Cycle_Error;
-      |        ^~~~~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36876	    512	   2136	  39524	   9a64	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-08:09:45 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-08:13:53 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:247:8: warning: unused variable 'tmp' [-Wunused-variable]
-  247 |    int tmp = uwTick;
-      |        ^~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36852	    512	   2136	  39500	   9a4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-14:40:43 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:144:6: warning: variable 'CO2_Cycle' set but not used [-Wunused-but-set-variable]
-  144 |  int CO2_Cycle;
-      |      ^~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
-Finished building: STM32NUCLEO-F401RE.bin
- 
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-14:41:08 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36844	    512	   2136	  39492	   9a44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-15:00:11 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:145:6: warning: variable 'gap' set but not used [-Wunused-but-set-variable]
-  145 |  int gap;
-      |      ^~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36852	    512	   2136	  39500	   9a4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-15:02:22 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:146:8: warning: variable 'Fgap' set but not used [-Wunused-but-set-variable]
-  146 |  float Fgap;
-      |        ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36884	    512	   2136	  39532	   9a6c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-15:07:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36884	    512	   2136	  39532	   9a6c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-15:31:53 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'check_CO2':
-../Core/Src/main.c:146:8: warning: variable 'Fgap' set but not used [-Wunused-but-set-variable]
-  146 |  float Fgap;
-      |        ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-Finished building: STM32NUCLEO-F401RE.bin
- 
-   text	   data	    bss	    dec	    hex	filename
-  36876	    512	   2136	  39524	   9a64	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-15:56:05 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36972	    512	   2136	  39620	   9ac4	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-15:58:56 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36980	    512	   2136	  39628	   9acc	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-16:00:01 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36972	    512	   2136	  39620	   9ac4	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-16:00:56 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  36988	    512	   2136	  39636	   9ad4	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-16:01:29 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36988	    512	   2136	  39636	   9ad4	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-19:15:50 **** Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36988	    512	   2136	  39636	   9ad4	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-19:16:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-   text	   data	    bss	    dec	    hex	filename
-  36988	    512	   2136	  39636	   9ad4	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-19:36:46 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/DHT.c: In function 'goToInput':
-../Core/Src/DHT.c:34:12: error: 'DHT_sensor' {aka 'struct <anonymous>'} has no member named 'pullUp'
-   34 |   if(sensor->pullUp == 1) {
-      |            ^~
-make: *** [Core/Src/subdir.mk:40: Core/Src/DHT.o] Error 1
-make: *** Waiting for unfinished jobs....
-"make -j7 all" terminated with exit code 2. Build might be incomplete.
-19:37:08 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+03:48:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -825,10 +103,24 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  36956	    512	   2136	  39604	   9ab4	STM32NUCLEO-F401RE.elf
+  37036	    500	   2140	  39676	   9afc	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
+ 
+17:32:28 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37036	    500	   2140	  39676	   9afc	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
+ 
+17:32:40 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+   text	   data	    bss	    dec	    hex	filename
+  37036	    500	   2140	  39676	   9afc	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
  
