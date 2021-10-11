@@ -78,6 +78,9 @@ void Error_Handler(void);
 #define Switch1_Pin GPIO_PIN_14
 #define Switch1_GPIO_Port GPIOB
 #define Switch1_EXTI_IRQn EXTI15_10_IRQn
+#define DUST_Pin GPIO_PIN_6
+#define DUST_GPIO_Port GPIOC
+#define DUST_EXTI_IRQn EXTI9_5_IRQn
 #define CO2_Pin GPIO_PIN_8
 #define CO2_GPIO_Port GPIOC
 #define E_Pin GPIO_PIN_8

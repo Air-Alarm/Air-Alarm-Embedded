@@ -70,6 +70,10 @@ char CO2_Pin_State= 0;
 char OLD_CO2_Pin_State = 0;
 char ms = 0;//세그먼트 시간 카운트
 char lcd = -1;
+char Dust_rerising_check = 1;
+char Dust_falling_check = 0;
+
+
 
 int CO2ms = 0;//CO2 PWM 시간 기록 카운트 자료형 바꾸면 안됨.
 int C; //CO2 value
@@ -87,6 +91,9 @@ int Dust_Falling_Time = 0;
 
 float temp = 0;
 float humi = 0;
+
+
+unsigned long Dust_Time_count = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -196,22 +203,26 @@ void LCD_Load_Print(){
 }
 
 
-//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-//{
-//
-//	switch(GPIO_Pin){
-//
-//	case DUST_Pin:
-//		if(HAL_GPIO_ReadPin(GPIOC, DUST_Pin)){
-//			Dust_Rising_Time = Dustms;
-//		}
-//		if(!(HAL_GPIO_ReadPin(GPIOC, DUST_Pin))){
-//			Dust_Falling_Time = Dustms;
-//		}
-//
-//	}
-//}
-//
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+
+	switch(GPIO_Pin){
+
+	case DUST_Pin:
+		if(Dust_rerising_check && HAL_GPIO_ReadPin(GPIOC, DUST_Pin)){
+			Dust_Rising_Time = Dust_Time_count;
+			Dust_rerising_check = 0;
+			Dust_falling_check = 1;
+		}
+		if(!(Dust_falling_check && HAL_GPIO_ReadPin(GPIOC, DUST_Pin))){
+			Dust_Falling_Time = Dust_Time_count;
+			Dust_falling_check = 0;
+			Dust_rerising_check = 1;
+		}
+
+	}
+}
+
 
 
 /* USER CODE END 0 */
@@ -266,19 +277,28 @@ int main(void)
   static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22};//dht22 핀 설정
   LCD_Load_Print();
   DHT_data d = DHT_getData(&bedRoom);
+
+
+
+  int Dust = 0;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  unsigned char a = '2';
-//
-//	  HAL_UART_Transmit(&huart2, &a, 1, 10);
 
 //	  printf("While Start %d\n\r", checkms);
 
 
+	  if (Dust_Rising_Time != 0 && Dust_Falling_Time != 0){
+		  Dust = Dust_Falling_Time - Dust_Rising_Time;
+		  Dust_Rising_Time = 0;
+ 		  Dust_Falling_Time = 0;
+ 		  Dust_Time_count = 0;
+
+	  }
 
 
 	  if (CO2_Rising_Time < CO2_Falling_Time && CO2_Falling_Time < CO2_ReRising_Time){
@@ -291,10 +311,6 @@ int main(void)
 	  	  }
 
 
-
-//	  char msg[40];
-//	  sprintf(msg, "\fTemp %2.1f°C, Hum %2.1f%%\n\r", d.temp, d.hum);
-//	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
 
 
 	  if (lcd > 2){
@@ -441,7 +457,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 84-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 0xffff-1;
+  htim2.Init.Period = 100-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -583,7 +599,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6|Test_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(Test_GPIO_Port, Test_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : A_Pin B_Pin C_Pin D_Pin
                            E_Pin F_Pin G_Pin DotT_Pin */
@@ -613,18 +629,28 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PC6 Test_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|Test_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  /*Configure GPIO pin : DUST_Pin */
+  GPIO_InitStruct.Pin = DUST_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(DUST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : CO2_Pin */
   GPIO_InitStruct.Pin = CO2_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(CO2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Test_Pin */
+  GPIO_InitStruct.Pin = Test_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Test_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
@@ -644,7 +670,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM2) {
-//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_10);
+		Dust_Time_count++;
 
 	    HAL_IncTick();
 	  }
