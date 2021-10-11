@@ -191,8 +191,8 @@ void check_CO2(){
 void LCD_Load_Print(){
 
 
-	  sprintf(Line1, "T: Loading...");
-	  sprintf(Line2, "H: Loading...");
+	  sprintf(Line1, "Air-Alarm V1.0.0");
+	  sprintf(Line2, "Air Monitor");
 	  lcd16x2_i2c_clear();
 	  lcd16x2_i2c_setCursor(0,0);
 	  lcd16x2_i2c_printf(Line1);
@@ -264,18 +264,21 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  if(lcd16x2_i2c_init(&hi2c1)){
+   	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
+    }
+    lcd16x2_i2c_clear();
+    lcd16x2_i2c_clear();
+    lcd16x2_i2c_clear();
+    LCD_Load_Print();
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim10);
   HAL_TIM_Base_Start_IT(&htim11);
-  if(lcd16x2_i2c_init(&hi2c1)){
- 	 HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, 1);
-  }
-  lcd16x2_i2c_clear();
-  lcd16x2_i2c_clear();
-  lcd16x2_i2c_clear();
+
+
   rising_check = 1;
   static DHT_sensor bedRoom = {GPIOC, GPIO_PIN_6, DHT22};//dht22 핀 설정
-  LCD_Load_Print();
+
   DHT_data d = DHT_getData(&bedRoom);
 
 
@@ -317,12 +320,14 @@ int main(void)
 		  DHT_data d = DHT_getData(&bedRoom);
 		  sprintf(Line1, "T: %2.1f  D: %d", d.temp, 123);
 		  sprintf(Line2, "H: %2.1f  C: %d", d.hum, C);
-//		  lcd16x2_i2c_clear();
+		  HAL_TIM_Base_Stop_IT(&htim2);
+		  lcd16x2_i2c_clear();
 		  lcd16x2_i2c_setCursor(0,0);
 		  lcd16x2_i2c_printf(Line1);
 		  lcd16x2_i2c_setCursor(1,0);
 		  lcd16x2_i2c_printf(Line2);
 		  lcd = 0;
+		  HAL_TIM_Base_Start_IT(&htim2);
 	  }
 
 
