@@ -1,18 +1,87 @@
-23:00:45 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:12:00 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
+arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-F401RE.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
+   text	   data	    bss	    dec	    hex	filename
+  37372	    500	   2156	  40028	   9c5c	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-F401RE.bin
+ 
+Finished building: STM32NUCLEO-F401RE.list
+ 
+22:12:17 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
+arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-F401RE.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
+   text	   data	    bss	    dec	    hex	filename
+  37372	    500	   2156	  40028	   9c5c	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-F401RE.bin
+ 
+Finished building: STM32NUCLEO-F401RE.list
+ 
+22:15:00 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/DHT.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/DHT.d" -MT"Core/Src/DHT.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/DHT.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-F401RE.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
+   text	   data	    bss	    dec	    hex	filename
+  37388	    500	   2156	  40044	   9c6c	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-F401RE.bin
+ 
+Finished building: STM32NUCLEO-F401RE.list
+ 
+22:16:45 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
    text	   data	    bss	    dec	    hex	filename
-  37252	    500	   2148	  39900	   9bdc	STM32NUCLEO-F401RE.elf
+  37388	    500	   2156	  40044	   9c6c	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
-23:00:58 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:19:04 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM32NUCLEO-F401RE.elf
+ 
+arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
+arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
+arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
+   text	   data	    bss	    dec	    hex	filename
+  37388	    500	   2156	  40044	   9c6c	STM32NUCLEO-F401RE.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM32NUCLEO-F401RE.bin
+ 
+Finished building: STM32NUCLEO-F401RE.list
+ 
+22:26:07 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
    text	   data	    bss	    dec	    hex	filename
-  37252	    500	   2148	  39900	   9bdc	STM32NUCLEO-F401RE.elf
+  37388	    500	   2156	  40044	   9c6c	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
-23:03:35 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:27:38 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
 arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o"
@@ -45,20 +114,16 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  37252	    500	   2148	  39900	   9bdc	STM32NUCLEO-F401RE.elf
+  37388	    500	   2156	  40044	   9c6c	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-23:12:25 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:31:30 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM32NUCLEO-F401RE.elf
  
@@ -66,26 +131,16 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  37332	    500	   2148	  39980	   9c2c	STM32NUCLEO-F401RE.elf
+  37412	    500	   2156	  40068	   9c84	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-23:13:12 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:34:12 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:297:21: warning: left-hand operand of comma expression has no effect [-Wunused-value]
-  297 |     Dust_Rising_Time, Dust_Falling_Time = 0, 0;
-      |                     ^
-../Core/Src/main.c:297:44: warning: right-hand operand of comma expression has no effect [-Wunused-value]
-  297 |     Dust_Rising_Time, Dust_Falling_Time = 0, 0;
-      |                                            ^
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM32NUCLEO-F401RE.elf
  
@@ -93,26 +148,16 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  37340	    500	   2148	  39988	   9c34	STM32NUCLEO-F401RE.elf
+  37412	    500	   2156	  40068	   9c84	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-23:14:07 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:35:34 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:297:21: warning: left-hand operand of comma expression has no effect [-Wunused-value]
-  297 |     Dust_Rising_Time, Dust_Falling_Time = 0, 0;
-      |                     ^
-../Core/Src/main.c:297:44: warning: right-hand operand of comma expression has no effect [-Wunused-value]
-  297 |     Dust_Rising_Time, Dust_Falling_Time = 0, 0;
-      |                                            ^
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM32NUCLEO-F401RE.elf
  
@@ -120,36 +165,16 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  37340	    500	   2148	  39988	   9c34	STM32NUCLEO-F401RE.elf
+  37412	    500	   2156	  40068	   9c84	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-23:15:29 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:39:22 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:299:25: error: expected ';' before '}' token
-  299 |      Dust_Time_count = 0
-      |                         ^
-      |                         ;
-  300 | 
-  301 |    }
-      |    ~                     
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
-make: *** [Core/Src/subdir.mk:40: Core/Src/main.o] Error 1
-"make -j7 all" terminated with exit code 2. Build might be incomplete.
-23:15:41 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
 arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM32NUCLEO-F401RE.elf
  
@@ -157,210 +182,17 @@ arm-none-eabi-size   STM32NUCLEO-F401RE.elf
 arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
 arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
    text	   data	    bss	    dec	    hex	filename
-  37356	    500	   2148	  40004	   9c44	STM32NUCLEO-F401RE.elf
+  37404	    500	   2156	  40060	   9c7c	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
  
 Finished building: STM32NUCLEO-F401RE.bin
  
 Finished building: STM32NUCLEO-F401RE.list
  
-23:18:03 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37364	    500	   2148	  40012	   9c4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-23:19:35 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
+22:39:36 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
 make -j7 all 
 arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
    text	   data	    bss	    dec	    hex	filename
-  37364	    500	   2148	  40012	   9c4c	STM32NUCLEO-F401RE.elf
+  37404	    500	   2156	  40060	   9c7c	STM32NUCLEO-F401RE.elf
 Finished building: default.size.stdout
- 
-23:21:44 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37356	    500	   2148	  40004	   9c44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-23:22:10 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37364	    500	   2148	  40012	   9c4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-02:12:59 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:283:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  283 |   int Dust = 0;
-      |       ^~~~
-At top level:
-../Core/Src/main.c:444:13: warning: 'MX_TIM2_Init' defined but not used [-Wunused-function]
-  444 | static void MX_TIM2_Init(void)
-      |             ^~~~~~~~~~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-Finished building: STM32NUCLEO-F401RE.bin
- 
-   text	   data	    bss	    dec	    hex	filename
-  36284	    500	   2148	  38932	   9814	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-02:14:14 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:285:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  285 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37364	    500	   2148	  40012	   9c4c	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-02:14:48 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:285:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  285 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37356	    500	   2148	  40004	   9c44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-02:16:06 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:285:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  285 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37356	    500	   2148	  40004	   9c44	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-02:17:44 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:285:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  285 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37476	    500	   2148	  40124	   9cbc	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
- 
-02:18:20 **** Incremental Build of configuration Debug for project STM32NUCLEO-F401RE ****
-make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:286:7: warning: variable 'Dust' set but not used [-Wunused-but-set-variable]
-  286 |   int Dust = 0;
-      |       ^~~~
-arm-none-eabi-gcc -o "STM32NUCLEO-F401RE.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/byungwookoh/Documents/GitHub/Air-Alarm-Embedded/STM32NUCLEO-F401RE/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32NUCLEO-F401RE.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM32NUCLEO-F401RE.elf
- 
-arm-none-eabi-size   STM32NUCLEO-F401RE.elf 
-arm-none-eabi-objdump -h -S  STM32NUCLEO-F401RE.elf  > "STM32NUCLEO-F401RE.list"
-arm-none-eabi-objcopy  -O binary  STM32NUCLEO-F401RE.elf  "STM32NUCLEO-F401RE.bin"
-   text	   data	    bss	    dec	    hex	filename
-  37476	    500	   2148	  40124	   9cbc	STM32NUCLEO-F401RE.elf
-Finished building: default.size.stdout
- 
-Finished building: STM32NUCLEO-F401RE.bin
- 
-Finished building: STM32NUCLEO-F401RE.list
  

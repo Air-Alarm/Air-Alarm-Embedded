@@ -25,8 +25,9 @@ static void goToInput(DHT_sensor *sensor) {
 
 
 
-DHT_data DHT_getData(DHT_sensor *sensor) {	//주의 다음 측정까지 10ms 이상의 여유가 있어야함.
+DHT_data DHT_getData(DHT_sensor *sensor) {	//다음 측정까지 10ms 이상의 여유가 있어야함.
 	DHT_data data = {0.0f, 0.0f};
+
 
 
 
@@ -83,7 +84,10 @@ DHT_data DHT_getData(DHT_sensor *sensor) {	//주의 다음 측정까지 10ms 이
 
 	}
 
-
+	#if DHT_POLLING_CONTROL == 1
+	sensor->lastHum = data.hum;
+	sensor->lastTemp = data.temp;
+	#endif
 
 	return data;
 }

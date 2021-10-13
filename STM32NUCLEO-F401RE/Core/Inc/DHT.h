@@ -14,18 +14,16 @@ typedef struct {
 } DHT_data;
 
 
-typedef enum {
-	DHT11,
-	DHT22
-} DHT_type;
+
+typedef struct {
+	float hum;
+	float temp;
+}OLD_data;
 
 
 typedef struct {
 	GPIO_TypeDef *DHT_Port;
 	uint16_t DHT_Pin;
-	DHT_type type;
-
-
 
 	#if DHT_POLLING_CONTROL == 1
 	uint32_t lastPollingTime;
