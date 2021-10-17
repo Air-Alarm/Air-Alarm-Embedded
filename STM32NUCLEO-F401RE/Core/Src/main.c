@@ -25,7 +25,7 @@
 #include "lcd16x2_i2c.h"
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
-#include <stdlib.h>
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,14 +100,14 @@ uint32_t TL; //Low 시간
 
 
 //먼지 센서
-int Dust = 2;
-int Dust_rising_time;
-int Dust_falling_time;
-int Dust_rerising_time;
-char Dust_rising_check = 0;
-char Dust_falling_check = 0;
-char Dust_rerising_check = 0;
-int Dust_time = 0;
+char Dust_Pin_State = 0;
+char OLD_Dust_Pin_State = 0;
+int Dust = 0;
+int Drising_time;
+int Dfalling_time;
+char Drising_check = 0;
+char Dfalling_check = 0;
+uint32_t Dustus = 0;
 
 //디버그, 개발용 변수
 //int checkms = 0;//메인 루프 시간 측정용
@@ -175,6 +175,24 @@ void Segment() {//세그먼트 숫자 출력
 
 }
 
+void check_Dust(){
+	//Vo = (Dust+100)*14
+	//Dust = (Vo/14)-100
+	long vo = Dfalling_time - Drising_time;
+	if (vo > 4900){//측정범위 이상
+		Dust = 300;
+	}
+	else if(vo <= 1400){//측정범위 이하
+		Dust = 0;
+	}
+	else{
+		Dust = (vo/14)-100;
+	}
+
+	Drising_time = 0;
+	Dfalling_time  = 0;
+
+}
 
 
 void check_CO2(){
@@ -268,15 +286,9 @@ char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
 			rawData[2] &= ~(1<<7);
 			temp_Humi[0] = (float)(((uint16_t)rawData[2]<<8) | rawData[3])*-0.1f;
 		}
-
-
 	}
-
-
 	return 0;// 정상 종료
 }
-
-
 
 
 
@@ -362,27 +374,33 @@ int main(void)
 //	  HAL_UART_Transmit(&huart2, &a, 1, 10);
 
 
+	  if (ms > 1){
+	  	  		  Segment();//3ms마다 세븐세그먼트를 출력
+	  	  		  ms = 0;
+	  }
+
 	  if (rising_time < falling_time && falling_time < rerising_time){
 		  check_CO2();
 	  }
 
-	  if (ms > 1){
-	  		  Segment();//3ms마다 세븐세그먼트를 출력
-	  		  ms = 0;
-	  	  }
 
-	  if (DHT22_Loop_Time >  2|| DHT22_Loop_Time == -1)
+	  if (Dfalling_time < Drising_time){
+		  check_Dust();
+	  }
+
+
+
+
+	  if (DHT22_Loop_Time >  5|| DHT22_Loop_Time == -1)//5초마다 온도 측정 스타트 비트 실행하고 진행
 	  {
 		  if (DHT22_Stat_Check == 0){
 			  DHT_Startbit();
 			  DHT22_Elapsed_Time = 0;
 			  DHT22_Stat_Check = 1;
 		  }
-
 	  }
 
-
-	  if (DHT22_Stat_Check && DHT22_Elapsed_Time > 17)
+	  if (DHT22_Stat_Check && DHT22_Elapsed_Time > 17)//스타트 비트 출력 17ms 이상 경과한경우 읽기 시작
 	  {
 		  char DHT_Return = DHT_getData();
 		  if (DHT_Return == 1){//타임아웃 리턴받은경우 다음 루프때 다시 측정하기
@@ -394,25 +412,8 @@ int main(void)
 
 
 
-	  if (Dust_time > 1000){
-		  if (Dust <= 0){
-			  Dust = 1;
-		  }
-		  else if (Dust <= 1){
-			  Dust = Dust + (rand()%2);
-		  }
-		  else if (Dust > 15){
-			  Dust = Dust + ((rand()%1) - 1);
-		  }
-		  else{
-			  Dust = Dust + (rand()%3) -1;;
-		  }
-		 Dust_time = 0;
-	  }
 
-
-
-	  if (lcd > 2){
+	  if (lcd > 10){
 
 		  sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], Dust);
 		  sprintf(Line2, "H: %2.1f  C: %d", temp_Humi[1], C);
@@ -428,11 +429,11 @@ int main(void)
 
 
 	  if(Uart_Loop_Time >= 10){
-	  		  	  char msg[40];
-	  		  	  sprintf(msg, "W:%d,T:%2.1f,H:%2.1f,D:%d,C:%d\n", Seg_Out, temp_Humi[0], temp_Humi[1],Dust,C);
-	  		  	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
-	  		  	  Uart_Loop_Time = 0;
-	  	  }
+		char msg[40];
+		sprintf(msg, "W:%d,T:%2.1f,H:%2.1f,D:%d,C:%d\n", Seg_Out, temp_Humi[0], temp_Humi[1],Dust,C);
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
+		Uart_Loop_Time = 0;
+	  }
 
 
 
@@ -559,7 +560,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 84-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 0xffff-1;
+  htim2.Init.Period = 50-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -756,10 +757,38 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-	if (htim->Instance == TIM2) {//타이머2 (100us)
-//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);//오실로스코프 타이머 토글 스피드 측정용
+	if (htim->Instance == TIM2) {//타이머2 (10us)
 
-	    HAL_IncTick();
+//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);//오실로스코프 타이머 토글 스피드 측정용
+		Dustus = Dustus + 50;
+		if (Dustus> 6000){//6000us 동안 초기화 안된경우 타임아웃이니 다시 측정 시작
+			Dfalling_check = 1;
+			Drising_check = 0;
+			Dustus = 0;
+		}
+		Dust_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
+
+
+
+		if (Dfalling_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State == 0){ //폴링 엣지
+			Dustus = 0;
+			Dfalling_check = 0;
+			Dfalling_time = Dustus;
+			Drising_check = 1;
+		}
+
+		if (Drising_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State){ //라이징 엣지
+			Drising_time = Dustus;
+			Drising_check = 0;
+			Dfalling_check = 1;
+		}
+
+
+
+
+		OLD_Dust_Pin_State = CO2_Pin_State;
+
+
 	  }
 
 	if(htim->Instance == TIM10){//타이머6 인터럽트 실행(1초)
@@ -772,7 +801,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  }
 	  lcd++; //LCD 출력 시간 카운트
 	  second++;
-	  Dust_time++;
 	  Uart_Loop_Time++;
 
 	}

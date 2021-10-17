@@ -93,10 +93,9 @@ bool lcd16x2_i2c_init(I2C_HandleTypeDef *pI2cHandle)
   {
     LCD_I2C_SLAVE_ADDRESS = LCD_I2C_SLAVE_ADDRESS_0;
   }
-  //Initialise LCD for 4-bit operation
-  //1. Wait at least 15ms
+
   HAL_Delay(45);
-  //2. Attentions sequence
+
   lcd16x2_i2c_sendCommand(0x30);
   HAL_Delay(5);
   lcd16x2_i2c_sendCommand(0x30);
