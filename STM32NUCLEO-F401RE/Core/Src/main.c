@@ -350,7 +350,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim2);//타이머 2 시작 100us
+  HAL_TIM_Base_Start_IT(&htim2);//타이머 2 시작 50us
   HAL_TIM_Base_Start_IT(&htim10);//타이머 10 시작 1ms
   HAL_TIM_Base_Start_IT(&htim11);//타이머 11 시작 1s
   if(lcd16x2_i2c_init(&hi2c1)){//LCD init 하기
@@ -757,10 +757,10 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-	if (htim->Instance == TIM2) {//타이머2 (10us)
+	if (htim->Instance == TIM2) {//타이머2 (50us)
 
 //		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);//오실로스코프 타이머 토글 스피드 측정용
-		Dustus = Dustus + 50;
+		Dustus = Dustus + 50;//50us씩 더함
 		if (Dustus> 6000){//6000us 동안 초기화 안된경우 타임아웃이니 다시 측정 시작
 			Dfalling_check = 1;
 			Drising_check = 0;

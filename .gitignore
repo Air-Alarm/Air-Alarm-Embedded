@@ -157,3 +157,4 @@ Temporary Items
 .metadata/
 /STM32NUCLEO-F401RE/Debug
 
+.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
