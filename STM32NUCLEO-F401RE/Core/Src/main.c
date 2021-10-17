@@ -25,6 +25,7 @@
 #include "lcd16x2_i2c.h"
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /* USER CODE END Includes */
 
@@ -56,7 +57,7 @@ UART_HandleTypeDef huart2;
 
 
 //세그먼트 변수
-int Seg_Out = 1013; //세그먼트에 표시될 숫자
+int Seg_Out = 525; //세그먼트에 표시될 숫자
 char second = 0; //세그먼트용 60초 카운트
 uint8_t ms = 0; //세그먼트3ms 카운트
 int segdig = 0;//세그먼트 출력 자릿수 지정
@@ -102,12 +103,13 @@ uint32_t TL; //Low 시간
 //먼지 센서
 char Dust_Pin_State = 0;
 char OLD_Dust_Pin_State = 0;
-int Dust = 0;
+int Dust = 2;
 int Drising_time;
 int Dfalling_time;
 char Drising_check = 0;
 char Dfalling_check = 0;
 uint32_t Dustus = 0;
+int Dust_time = 0;
 
 //디버그, 개발용 변수
 //int checkms = 0;//메인 루프 시간 측정용
@@ -350,7 +352,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim2);//타이머 2 시작 50us
+  //HAL_TIM_Base_Start_IT(&htim2);//타이머 2 시작 50us
   HAL_TIM_Base_Start_IT(&htim10);//타이머 10 시작 1ms
   HAL_TIM_Base_Start_IT(&htim11);//타이머 11 시작 1s
   if(lcd16x2_i2c_init(&hi2c1)){//LCD init 하기
@@ -384,9 +386,28 @@ int main(void)
 	  }
 
 
-	  if (Dfalling_time < Drising_time){
-		  check_Dust();
+//	  if (Dfalling_time < Drising_time){
+//		  check_Dust();
+//	  }
+
+
+	  if (Dust_time > 1000){
+		  if (Dust <= 0){
+			  Dust = 1;
+		  }
+		  else if (Dust <= 1){
+			  Dust = Dust + (rand()%2);
+		  }
+		  else if (Dust > 15){
+			  Dust = Dust + ((rand()%1) - 1);
+		  }
+		  else{
+			  Dust = Dust + (rand()%3) -1;;
+		  }
+		 Dust_time = 0;
 	  }
+
+
 
 
 
@@ -802,12 +823,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  lcd++; //LCD 출력 시간 카운트
 	  second++;
 	  Uart_Loop_Time++;
+	  Dust_time++;
 
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
 		ms++;
 		CO2ms++;
 		DHT22_Elapsed_Time++;
+
 		//checkms++;
 		CO2_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
 
