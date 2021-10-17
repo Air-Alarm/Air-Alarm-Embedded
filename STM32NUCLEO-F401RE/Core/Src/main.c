@@ -204,19 +204,16 @@ void LCD_Load_Print(){
 
 }
 
-
-
-char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
-
+void DHT_Startbit(){
 	void goToOutput() {//아웃풋으로 설정 풀업 설정한 버전
-		GPIO_InitTypeDef GPIO_InitStruct = {0};
-		HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
-		GPIO_InitStruct.Pin = GPIO_PIN_6;
-		GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
-		GPIO_InitStruct.Pull = GPIO_PULLUP;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-	}
+			GPIO_InitTypeDef GPIO_InitStruct = {0};
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
+			GPIO_InitStruct.Pin = GPIO_PIN_6;
+			GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+			GPIO_InitStruct.Pull = GPIO_PULLUP;
+			GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+			HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+		}
 
 	void goToInput() {//인풋으로 변경
 	  GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -229,7 +226,22 @@ char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
 
 	goToOutput();
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 0);
-	HAL_Delay(15);
+
+
+}
+
+char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
+
+
+	void goToInput() {//인풋으로 변경
+	  GPIO_InitTypeDef GPIO_InitStruct = {0};
+	  GPIO_InitStruct.Pin = GPIO_PIN_6;
+	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	  GPIO_InitStruct.Pull = GPIO_PULLUP;
+	  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	}
+
+
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
 
 
@@ -380,6 +392,8 @@ int main(void)
 
 	  if (DHT22_Loop_Time >  4|| DHT22_Loop_Time == -1)
 	  {
+		  DHT_Startbit();
+		  HAL_Delay(15);
 		  char DHT_Return = DHT_getData();
 		  if (DHT_Return == 1){//타임아웃 리턴받은경우 다음 루프때 다시 측정하기
 			  DHT22_Loop_Time = -1;
@@ -808,7 +822,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 		}
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1) {
+  if (htim->Instance == TIM1) {//i2c에 활용되 타이머 인듯..
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
