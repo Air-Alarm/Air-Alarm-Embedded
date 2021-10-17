@@ -81,6 +81,7 @@ float temp_Humi[2] = {0.0, 0.0};
 float temp = 0;
 float humi = 0;
 char DHT22_Loop_Time = -1;//온습도 5초마다 측정
+char DHT22_Stratbit_Time = 0;
 
 
 
@@ -205,47 +206,32 @@ void LCD_Load_Print(){
 }
 
 void DHT_Startbit(){
-	void goToOutput() {//아웃풋으로 설정 풀업 설정한 버전
-			GPIO_InitTypeDef GPIO_InitStruct = {0};
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
-			GPIO_InitStruct.Pin = GPIO_PIN_6;
-			GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
-			GPIO_InitStruct.Pull = GPIO_PULLUP;
-			GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-			HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-		}
-
-	void goToInput() {//인풋으로 변경
-	  GPIO_InitTypeDef GPIO_InitStruct = {0};
-	  GPIO_InitStruct.Pin = GPIO_PIN_6;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-	}
+	GPIO_InitTypeDef GPIO_InitStruct = {0};//아웃풋 모드로 변경
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
+	GPIO_InitStruct.Pin = GPIO_PIN_6;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 
-	goToOutput();
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 0);
+
+
+	DHT22_Stratbit_Time = 0;
 
 
 }
 
 char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
-
-
-	void goToInput() {//인풋으로 변경
-	  GPIO_InitTypeDef GPIO_InitStruct = {0};
-	  GPIO_InitStruct.Pin = GPIO_PIN_6;
-	  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-	  GPIO_InitStruct.Pull = GPIO_PULLUP;
-	  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-	}
-
-
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
 
+	GPIO_InitTypeDef GPIO_InitStruct = {0};//인풋 모드로 변경
+	GPIO_InitStruct.Pin = GPIO_PIN_6;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-	goToInput();
 	uint16_t timeout = 0;
 	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6)) {
 		timeout++;
@@ -394,13 +380,17 @@ int main(void)
 	  {
 		  DHT_Startbit();
 		  HAL_Delay(15);
+	  }
+
+
+	  if (DHT22_Loop_Time >  4|| DHT22_Loop_Time == -1)
+	  {
 		  char DHT_Return = DHT_getData();
 		  if (DHT_Return == 1){//타임아웃 리턴받은경우 다음 루프때 다시 측정하기
 			  DHT22_Loop_Time = -1;
 		  }
 		  DHT22_Loop_Time = 0;
 	  }
-
 
 
 
@@ -790,6 +780,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
 		ms++;
 		CO2ms++;
+		DHT22_Stratbit_Time++;
 		//checkms++;
 		CO2_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
 
