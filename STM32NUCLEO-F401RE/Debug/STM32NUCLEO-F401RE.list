@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  000201e8  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00013058  00000000  00000000  00020218  2**0
+ 12 .debug_info   00012f45  00000000  00000000  00020218  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002371  00000000  00000000  00033270  2**0
+ 13 .debug_abbrev 00002360  00000000  00000000  0003315d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000ff8  00000000  00000000  000355e8  2**3
+ 14 .debug_aranges 00000fb8  00000000  00000000  000354c0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 00000f58  00000000  00000000  000365e0  2**3
+ 15 .debug_ranges 00000f18  00000000  00000000  00036478  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00017b2a  00000000  00000000  00037538  2**0
+ 16 .debug_macro  00017b26  00000000  00000000  00037390  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00012285  00000000  00000000  0004f062  2**0
+ 17 .debug_line   00012185  00000000  00000000  0004eeb6  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00091a1d  00000000  00000000  000612e7  2**0
+ 18 .debug_str    00091974  00000000  00000000  0006103b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000f2d04  2**0
+ 19 .comment      00000053  00000000  00000000  000f29af  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000562c  00000000  00000000  000f2d58  2**2
+ 20 .debug_frame  0000552c  00000000  00000000  000f2a04  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1211,7 +1211,7 @@ Disassembly of section .text:
 #define LCD_I2C_SLAVE_ADDRESS_0  0x4E
 #define LCD_I2C_SLAVE_ADDRESS_1  0x7E
 
-/* Private functions */
+
 static void lcd16x2_i2c_sendCommand(uint8_t command)
 {
  8000eb0:	b580      	push	{r7, lr}
@@ -1327,10 +1327,9 @@ static void lcd16x2_i2c_sendData(uint8_t data)
  8000f7c:	20000208 	.word	0x20000208
 
 08000f80 <lcd16x2_i2c_init>:
-/**
- * @brief Initialise LCD16x2
- * @param[in] *pI2cHandle - pointer to HAL I2C handle
- */
+
+
+
 bool lcd16x2_i2c_init(I2C_HandleTypeDef *pI2cHandle)
 {
  8000f80:	b580      	push	{r7, lr}
@@ -1460,10 +1459,8 @@ bool lcd16x2_i2c_init(I2C_HandleTypeDef *pI2cHandle)
  8001054:	20000208 	.word	0x20000208
 
 08001058 <lcd16x2_i2c_setCursor>:
- * @brief Set cursor position
- * @param[in] row - 0 or 1 for line1 or line2
- * @param[in] col - 0 - 15 (16 columns LCD)
- */
+
+
 void lcd16x2_i2c_setCursor(uint8_t row, uint8_t col)
 {
  8001058:	b580      	push	{r7, lr}
@@ -1515,9 +1512,8 @@ void lcd16x2_i2c_setCursor(uint8_t row, uint8_t col)
 
 080010a0 <lcd16x2_i2c_clear>:
 
-/**
- * @brief Display clear
- */
+
+
 void lcd16x2_i2c_clear(void)
 {
  80010a0:	b580      	push	{r7, lr}
@@ -1534,9 +1530,8 @@ void lcd16x2_i2c_clear(void)
 
 080010b4 <lcd16x2_i2c_printf>:
 
-/**
- * @brief Print to display
- */
+
+
 void lcd16x2_i2c_printf(const char* str, ...)
 {
  80010b4:	b40f      	push	{r0, r1, r2, r3}
