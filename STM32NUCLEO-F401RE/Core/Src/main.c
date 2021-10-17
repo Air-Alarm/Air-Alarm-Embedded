@@ -25,8 +25,6 @@
 #include "lcd16x2_i2c.h"
 #include "stm32f4xx_hal.h"
 #include <stdio.h>
-
-#include <string.h>
 #include <stdlib.h>
 /* USER CODE END Includes */
 
@@ -81,7 +79,8 @@ float temp_Humi[2] = {0.0, 0.0};
 float temp = 0;
 float humi = 0;
 char DHT22_Loop_Time = -1;//온습도 5초마다 측정
-char DHT22_Stratbit_Time = 0;
+char DHT22_Elapsed_Time = 0;
+char DHT22_Stat_Check = 0;
 
 
 
@@ -216,10 +215,6 @@ void DHT_Startbit(){
 
 
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 0);
-
-
-	DHT22_Stratbit_Time = 0;
-
 
 }
 
@@ -376,19 +371,24 @@ int main(void)
 	  		  ms = 0;
 	  	  }
 
-	  if (DHT22_Loop_Time >  4|| DHT22_Loop_Time == -1)
+	  if (DHT22_Loop_Time >  2|| DHT22_Loop_Time == -1)
 	  {
-		  DHT_Startbit();
-		  HAL_Delay(15);
+		  if (DHT22_Stat_Check == 0){
+			  DHT_Startbit();
+			  DHT22_Elapsed_Time = 0;
+			  DHT22_Stat_Check = 1;
+		  }
+
 	  }
 
 
-	  if (DHT22_Loop_Time >  4|| DHT22_Loop_Time == -1)
+	  if (DHT22_Stat_Check && DHT22_Elapsed_Time > 17)
 	  {
 		  char DHT_Return = DHT_getData();
 		  if (DHT_Return == 1){//타임아웃 리턴받은경우 다음 루프때 다시 측정하기
 			  DHT22_Loop_Time = -1;
 		  }
+		  DHT22_Stat_Check = 0;
 		  DHT22_Loop_Time = 0;
 	  }
 
@@ -407,7 +407,6 @@ int main(void)
 		  else{
 			  Dust = Dust + (rand()%3) -1;;
 		  }
-
 		 Dust_time = 0;
 	  }
 
@@ -780,7 +779,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
 		ms++;
 		CO2ms++;
-		DHT22_Stratbit_Time++;
+		DHT22_Elapsed_Time++;
 		//checkms++;
 		CO2_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_8);
 
