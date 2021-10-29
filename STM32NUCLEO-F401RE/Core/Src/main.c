@@ -71,7 +71,7 @@ char Uart_Loop_Time = 0;//Uart 10초 카운트
 //LCD 변수
 char Line1[17];
 char Line2[17];
-uint8_t lcd = -1; //LCD 시간 카운트
+uint8_t lcd = -3; //LCD 시간 카운트
 
 
 //온습도
@@ -113,7 +113,8 @@ int Dust_time = 0;
 
 //디버그, 개발용 변수
 //int checkms = 0;//메인 루프 시간 측정용
-
+int Old_Loop_Count = 0;
+int Loop_Count;
 
 
 /* USER CODE END PV */
@@ -297,11 +298,33 @@ char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)//GPIO 인터럽트 콜백
 {
 
-	if(GPIO_Pin == 8192){//버튼 눌르면 1분 올리기
-		Seg_Out++;
+	if (GPIO_Pin == 8192) {	//버튼 눌르면 1분 올리기
+
+		int gap =
+				Loop_Count < Old_Loop_Count ?
+						Old_Loop_Count - Loop_Count :
+						Loop_Count - Old_Loop_Count;
+
+		if (gap > 100) {
+			Seg_Out++;
+
+		}
+		Old_Loop_Count = Loop_Count;
 	}
+
 	else if(GPIO_Pin == 16384){
-		Seg_Out = Seg_Out + 100; //1시간 올리기
+
+		int gap =
+				Loop_Count < Old_Loop_Count ?
+						Old_Loop_Count - Loop_Count :
+						Loop_Count - Old_Loop_Count;
+
+		if (gap > 100) {
+			Seg_Out = Seg_Out + 100; //1시간 올리기
+
+		}
+		Old_Loop_Count = Loop_Count;
+
 
 	}
 
@@ -347,12 +370,10 @@ int main(void)
   MX_TIM10_Init();
   MX_TIM11_Init();
   MX_USART2_UART_Init();
-  MX_TIM2_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  //HAL_TIM_Base_Start_IT(&htim2);//타이머 2 시작 50us
   HAL_TIM_Base_Start_IT(&htim10);//타이머 10 시작 1ms
   HAL_TIM_Base_Start_IT(&htim11);//타이머 11 시작 1s
   if(lcd16x2_i2c_init(&hi2c1)){//LCD init 하기
@@ -434,7 +455,7 @@ int main(void)
 
 
 
-	  if (lcd > 10){
+	  if (lcd > 10 || lcd == -1){
 
 		  sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], Dust);
 		  sprintf(Line2, "H: %2.1f  C: %d", temp_Humi[1], C);
@@ -777,39 +798,7 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
-	if (htim->Instance == TIM2) {//타이머2 (50us)
 
-//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);//오실로스코프 타이머 토글 스피드 측정용
-//		Dustus = Dustus + 50;//50us씩 더함
-//		if (Dustus> 6000){//6000us 동안 초기화 안된경우 타임아웃이니 다시 측정 시작
-//			Dfalling_check = 1;
-//			Drising_check = 0;
-//			Dustus = 0;
-//		}
-//		Dust_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
-//
-//
-//
-//		if (Dfalling_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State == 0){ //폴링 엣지
-//			Dustus = 0;
-//			Dfalling_check = 0;
-//			Dfalling_time = Dustus;
-//			Drising_check = 1;
-//		}
-//
-//		if (Drising_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State){ //라이징 엣지
-//			Drising_time = Dustus;
-//			Drising_check = 0;
-//			Dfalling_check = 1;
-//		}
-//
-//
-//
-//
-//		OLD_Dust_Pin_State = CO2_Pin_State;
-
-
-	  }
 
 	if(htim->Instance == TIM10){//타이머6 인터럽트 실행(1초)
 
@@ -826,6 +815,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	}
 	if(htim->Instance == TIM11){//타이머6 인터럽트 실행(1ms)
+		Loop_Count++;
 		ms++;
 		CO2ms++;
 		DHT22_Elapsed_Time++;
