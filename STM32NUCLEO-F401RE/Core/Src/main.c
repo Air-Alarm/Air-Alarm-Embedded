@@ -152,7 +152,7 @@ void Segment() {//세그먼트 숫자 출력
 	if(Seg_Out % 100 == 60){//60분, 24시간 카운트
 		Seg_Out = Seg_Out + 40;
 	}
-	else if(Seg_Out == 2400){
+	else if(Seg_Out >= 2400){
 		Seg_Out = 0;
 	}
 
@@ -226,41 +226,41 @@ void LCD_Load_Print(){
 
 void DHT_Startbit(){
 	GPIO_InitTypeDef GPIO_InitStruct = {0};//아웃풋 모드로 변경
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
-	GPIO_InitStruct.Pin = GPIO_PIN_6;
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, 1);
+	GPIO_InitStruct.Pin = GPIO_PIN_5;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 0);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, 0);
 
 }
 
 char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
-	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, 1);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, 1);
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};//인풋 모드로 변경
-	GPIO_InitStruct.Pin = GPIO_PIN_6;
+	GPIO_InitStruct.Pin = GPIO_PIN_5;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	uint16_t timeout = 0;
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6)) {
+	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) {
 		timeout++;
 		if (timeout > 10000) return 1;//10000회 반복동안 값 안들어오면 측정하지 않고 리턴
 	}
 	timeout = 0;
 
-	while(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6))) {
+	while(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5))) {
 		timeout++;
 		if (timeout > 10000) return 1;
 	}
 	timeout = 0;
 
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6)) {
+	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) {
 		timeout++;
 		if (timeout > 10000) return 1;
 	}
@@ -270,10 +270,10 @@ char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
 		for(uint8_t b = 7; b != 255; b--) {
 			uint32_t hT = 0, lT = 0;
 
-			while(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6))) lT++;
+			while(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5))) lT++;
 
 			timeout = 0;
-			while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_6)) hT++;
+			while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) hT++;
 			if(hT > lT) rawData[a] |= (1<<b);
 		}
 	}
@@ -297,10 +297,10 @@ char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)//GPIO 인터럽트 콜백
 {
 
-	if(GPIO_Pin == 13){//버튼 눌르면 1분 올리기
+	if(GPIO_Pin == 8192){//버튼 눌르면 1분 올리기
 		Seg_Out++;
 	}
-	else if(GPIO_Pin == 14){
+	else if(GPIO_Pin == 16384){
 		Seg_Out = Seg_Out + 100; //1시간 올리기
 
 	}
@@ -581,7 +581,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 84-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 50-1;
+  htim2.Init.Period = 0xffff-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -683,7 +683,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
+  huart2.Init.BaudRate = 115200;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -720,10 +720,10 @@ static void MX_GPIO_Init(void)
                           |E_Pin|F_Pin|G_Pin|DotT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6|Test_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, Dig1_Pin|Dig2_Pin|Dig3_Pin|Dig4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : A_Pin B_Pin C_Pin D_Pin
                            E_Pin F_Pin G_Pin DotT_Pin */
@@ -734,10 +734,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DUST_Pin CO2_Pin */
-  GPIO_InitStruct.Pin = DUST_Pin|CO2_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pin : PC5 */
+  GPIO_InitStruct.Pin = GPIO_PIN_5;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Dig1_Pin Dig2_Pin Dig3_Pin Dig4_Pin */
@@ -753,12 +754,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PC6 Test_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_6|Test_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pin : CO2_Pin */
+  GPIO_InitStruct.Pin = CO2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(CO2_GPIO_Port, &GPIO_InitStruct);
 
 }
 
@@ -774,40 +774,39 @@ static void MX_GPIO_Init(void)
   * @param  htim : TIM handle
   * @retval None
   */
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
   /* USER CODE BEGIN Callback 0 */
 	if (htim->Instance == TIM2) {//타이머2 (50us)
 
 //		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);//오실로스코프 타이머 토글 스피드 측정용
-		Dustus = Dustus + 50;//50us씩 더함
-		if (Dustus> 6000){//6000us 동안 초기화 안된경우 타임아웃이니 다시 측정 시작
-			Dfalling_check = 1;
-			Drising_check = 0;
-			Dustus = 0;
-		}
-		Dust_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
-
-
-
-		if (Dfalling_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State == 0){ //폴링 엣지
-			Dustus = 0;
-			Dfalling_check = 0;
-			Dfalling_time = Dustus;
-			Drising_check = 1;
-		}
-
-		if (Drising_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State){ //라이징 엣지
-			Drising_time = Dustus;
-			Drising_check = 0;
-			Dfalling_check = 1;
-		}
-
-
-
-
-		OLD_Dust_Pin_State = CO2_Pin_State;
+//		Dustus = Dustus + 50;//50us씩 더함
+//		if (Dustus> 6000){//6000us 동안 초기화 안된경우 타임아웃이니 다시 측정 시작
+//			Dfalling_check = 1;
+//			Drising_check = 0;
+//			Dustus = 0;
+//		}
+//		Dust_Pin_State = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5);
+//
+//
+//
+//		if (Dfalling_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State == 0){ //폴링 엣지
+//			Dustus = 0;
+//			Dfalling_check = 0;
+//			Dfalling_time = Dustus;
+//			Drising_check = 1;
+//		}
+//
+//		if (Drising_check && Dust_Pin_State != OLD_Dust_Pin_State && Dust_Pin_State){ //라이징 엣지
+//			Drising_time = Dustus;
+//			Drising_check = 0;
+//			Dfalling_check = 1;
+//		}
+//
+//
+//
+//
+//		OLD_Dust_Pin_State = CO2_Pin_State;
 
 
 	  }
@@ -863,7 +862,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 		}
   /* USER CODE END Callback 0 */
-  if (htim->Instance == TIM1) {//i2c에 활용되 타이머 인듯..
+  if (htim->Instance == TIM1) {
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
