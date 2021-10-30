@@ -109,8 +109,8 @@ char Dust_time = 0;
 
 //디버그, 개발용 변수
 //int checkms = 0;//메인 루프 시간 측정용
-int Old_Loop_Count = 0;
-int Loop_Count;
+uint32_t Old_Loop_Count = 0;
+uint32_t Loop_Count;
 
 
 /* USER CODE END PV */
@@ -293,7 +293,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)//GPIO 인터럽트 콜백
 						Old_Loop_Count - Loop_Count :
 						Loop_Count - Old_Loop_Count;
 
-		if (gap > 100) {
+		if (gap > 250) {
 			Seg_Out++;
 
 		}
@@ -307,7 +307,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)//GPIO 인터럽트 콜백
 						Old_Loop_Count - Loop_Count :
 						Loop_Count - Old_Loop_Count;
 
-		if (gap > 100) {
+		if (gap > 250) {
 			Seg_Out = Seg_Out + 100; //1시간 올리기
 
 		}
@@ -331,9 +331,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	if(huart->Instance == USART6){
 //		char DF9 = rx6_data[11];
 //		char DF10 = rx6_data[12];
-//		char DF11 = rx6_data[13];
+		char DF11 = rx6_data[13];
 		char DF12 = rx6_data[14];
-		dust = DF12;
+		dust = (DF11 << 8)+DF12;
 		HAL_UART_Receive_IT(&huart6, &rx6_data, 56);
 
 
