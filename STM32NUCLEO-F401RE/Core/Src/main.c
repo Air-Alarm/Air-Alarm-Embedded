@@ -69,7 +69,7 @@ uint8_t buff[10];//uart 입력 버퍼
 char Uart_Loop_Time = 0;//Uart 10초 카운트
 
 
-uint8_t rx6_data[14];
+uint8_t rx6_data[56];
 
 //LCD 변수
 char Line1[17];
@@ -104,6 +104,7 @@ uint32_t TL; //Low 시간
 
 
 //먼지 센서
+int dust = 0;
 char Dust_time = 0;
 
 //디버그, 개발용 변수
@@ -177,9 +178,9 @@ void Segment() {//세그먼트 숫자 출력
 void check_Dust(){
 //	int test[10] = {0x11, 0x02, 0x0B, 0x07, 0xDB, 0x11+0x02+0x0B+0x07+0xDB};
 //	HAL_UART_Transmit(&huart6, (uint8_t*)test, sizeof(test)/4, 0xFF);
-	char test[10] = {0x11, 0x01, 0x1F, 0xCF};
+	char test[10] = {0x11, 0x02, 0x0B, 0x07, 0xDB};
 
-	HAL_UART_Transmit(&huart6, (uint8_t*)test, 4, 0xFF);
+	HAL_UART_Transmit(&huart6, (uint8_t*)test, 5, 0xFF);
 
 
 }
@@ -326,9 +327,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)//GPIO 인터럽트 콜백
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-if(huart->Instance == USART6){
 
-		HAL_UART_Receive_IT(&huart6, &rx6_data, 14);
+	if(huart->Instance == USART6){
+//		char DF9 = rx6_data[11];
+//		char DF10 = rx6_data[12];
+//		char DF11 = rx6_data[13];
+		char DF12 = rx6_data[14];
+		dust = DF12;
+		HAL_UART_Receive_IT(&huart6, &rx6_data, 56);
 
 
 
@@ -378,7 +384,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart6, &rx6_data, 14);
+  HAL_UART_Receive_IT(&huart6, &rx6_data, 56);
   HAL_TIM_Base_Start_IT(&htim10);//타이머 10 시작 1ms
   HAL_TIM_Base_Start_IT(&htim11);//타이머 11 시작 1s
   if(lcd16x2_i2c_init(&hi2c1)){//LCD init 하기
@@ -448,7 +454,7 @@ int main(void)
 
 	  if (lcd > 10 || lcd == -1){
 
-		  sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], 15);
+		  sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], dust);
 		  sprintf(Line2, "H: %2.1f  C: %d", temp_Humi[1], C);
 		  lcd16x2_i2c_clear();
 		  lcd16x2_i2c_setCursor(0,0);
@@ -461,7 +467,7 @@ int main(void)
 
 	  if(Uart_Loop_Time >= 10){
 		char msg[40];
-		sprintf(msg, "W:%d,T:%2.1f,H:%2.1f,D:%d,C:%d\n", Seg_Out, temp_Humi[0], temp_Humi[1],15,C);
+		sprintf(msg, "W:%d,T:%2.1f,H:%2.1f,D:%d,C:%d\n", Seg_Out, temp_Humi[0], temp_Humi[1],dust,C);
 		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
 		Uart_Loop_Time = 0;
 	  }
