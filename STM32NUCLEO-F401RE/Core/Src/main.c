@@ -65,16 +65,13 @@ int segdig = 0;//세그먼트 출력 자릿수 지정
 
 //Uart 변수
 uint8_t rx2_data;
-uint8_t buff[10];//uart 입력 버퍼
 char Uart_Loop_Time = 0;//Uart 10초 카운트
-
-
-uint8_t rx6_data[56];
+uint8_t rx6_data[56];//uart6 버퍼
 
 //LCD 변수
 char Line1[17];
 char Line2[17];
-uint8_t lcd = -3; //LCD 시간 카운트
+char lcd = -3; //LCD 시간 카운트
 
 
 //온습도
@@ -140,17 +137,15 @@ void Seg_Off(void){//다음 세그먼트 출력전 모두 꺼서 잔상 없애�
 }
 
 
-void Segment() {//세그먼트 숫자 출력
+void Segment() { //세그먼트 숫자 출력
 	unsigned char List_Of_Segment_Info[10] = { 0xC0, 0xF9, 0xA4, 0xB0, 0x99,
-	 		  0x92, 0x82, 0xD8, 0x80, 0x98 };
+			0x92, 0x82, 0xD8, 0x80, 0x98 };
 	int addr[4];
 	Seg_Off(); // 모든 세그먼트 끄기
 
-
-	if(Seg_Out % 100 == 60){//60분, 24시간 카운트
+	if (Seg_Out % 100 == 60) { //60분, 24시간 카운트
 		Seg_Out = Seg_Out + 40;
-	}
-	else if(Seg_Out >= 2400){
+	} else if (Seg_Out >= 2400) {
 		Seg_Out = 0;
 	}
 
@@ -159,29 +154,25 @@ void Segment() {//세그먼트 숫자 출력
 	addr[2] = Seg_Out % 100 / 10;
 	addr[3] = Seg_Out % 10;
 
-
-	uint16_t i[4] = {1,2,4,8}; //세그먼트 Dgit 조정
+	uint16_t i[4] = { 1, 2, 4, 8 }; //세그먼트 Dgit 조정
 	HAL_GPIO_WritePin(GPIOB, i[segdig], 0);
 
-	uint16_t j = 0;//출력 핀과 입력 값의 비트연산을 위한 변수
+	uint16_t j = 0; //출력 핀과 입력 값의 비트연산을 위한 변수
 
-	j |= (~(List_Of_Segment_Info[addr[segdig]]&0xFF))<<4; //PA4 부터로 옮기고시프트 4로 변경
+	j |= (~(List_Of_Segment_Info[addr[segdig]] & 0xFF)) << 4; //PA4 부터로 옮기고시프트 4로 변경
 	HAL_GPIO_WritePin(GPIOA, j, 1);
 
 	segdig++;
-	if (segdig == 4){
+	if (segdig == 4) {
 		segdig = 0;
 	}
 
 }
 
-void check_Dust(){
-//	int test[10] = {0x11, 0x02, 0x0B, 0x07, 0xDB, 0x11+0x02+0x0B+0x07+0xDB};
-//	HAL_UART_Transmit(&huart6, (uint8_t*)test, sizeof(test)/4, 0xFF);
-	char test[10] = {0x11, 0x02, 0x0B, 0x07, 0xDB};
+void check_Dust() {
 
-	HAL_UART_Transmit(&huart6, (uint8_t*)test, 5, 0xFF);
-
+	uint8_t dust_Check_Uart_String[10] = { 0x11, 0x02, 0x0B, 0x07, 0xDB };
+	HAL_UART_Transmit(&huart6, (uint8_t*) dust_Check_Uart_String, 5, 0xFF);
 
 }
 
@@ -199,22 +190,21 @@ void check_CO2(){
 }
 
 
-void LCD_Load_Print(){
+void LCD_Load_Print() {
 
-
-	  sprintf(Line1, "Air-Alarm V1.0.0");
-	  sprintf(Line2, "Air Monitor");
-	  lcd16x2_i2c_clear();
-	  lcd16x2_i2c_setCursor(0,0);
-	  lcd16x2_i2c_printf(Line1);
-	  lcd16x2_i2c_setCursor(1,0);
-	  lcd16x2_i2c_printf(Line2);
-	  lcd = 0;
+	sprintf(Line1, "Air-Alarm V1.0.0");
+	sprintf(Line2, "Air Monitor");
+	lcd16x2_i2c_clear();
+	lcd16x2_i2c_setCursor(0, 0);
+	lcd16x2_i2c_printf(Line1);
+	lcd16x2_i2c_setCursor(1, 0);
+	lcd16x2_i2c_printf(Line2);
+	lcd = 0;
 
 }
 
-void DHT_Startbit(){
-	GPIO_InitTypeDef GPIO_InitStruct = {0};//아웃풋 모드로 변경
+void DHT_Startbit() {
+	GPIO_InitTypeDef GPIO_InitStruct = { 0 }; //아웃풋 모드로 변경
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, 1);
 	GPIO_InitStruct.Pin = GPIO_PIN_5;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
@@ -222,125 +212,128 @@ void DHT_Startbit(){
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, 0);
 
 }
 
-char DHT_getData() {// 다음 측정주기까지1ms 이상 여유 있어야함.
+char DHT_getData() { // 다음 측정주기까지1ms 이상 여유 있어야함.
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, 1);
 
-	GPIO_InitTypeDef GPIO_InitStruct = {0};//인풋 모드로 변경
+	GPIO_InitTypeDef GPIO_InitStruct = { 0 }; //인풋 모드로 변경
 	GPIO_InitStruct.Pin = GPIO_PIN_5;
 	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
 	GPIO_InitStruct.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 	uint16_t timeout = 0;
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) {
+	while (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) {
 		timeout++;
-		if (timeout > 10000) return 1;//10000회 반복동안 값 안들어오면 측정하지 않고 리턴
+		if (timeout > 10000)
+			return 1; //10000회 반복동안 값 안들어오면 측정하지 않고 리턴
 	}
 	timeout = 0;
 
-	while(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5))) {
+	while (!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5))) {
 		timeout++;
-		if (timeout > 10000) return 1;
+		if (timeout > 10000)
+			return 1;
 	}
 	timeout = 0;
 
-	while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) {
+	while (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) {
 		timeout++;
-		if (timeout > 10000) return 1;
+		if (timeout > 10000)
+			return 1;
 	}
 
-	uint8_t rawData[5] = {0,0,0,0,0};
-	for(uint8_t a = 0; a < 5; a++) {
-		for(uint8_t b = 7; b != 255; b--) {
+	uint8_t rawData[5] = { 0, 0, 0, 0, 0 };
+	for (uint8_t a = 0; a < 5; a++) {
+		for (uint8_t b = 7; b != 255; b--) {
 			uint32_t hT = 0, lT = 0;
 
-			while(!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5))) lT++;
+			while (!(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)))
+				lT++;
 
 			timeout = 0;
-			while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5)) hT++;
-			if(hT > lT) rawData[a] |= (1<<b);
+			while (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_5))
+				hT++;
+			if (hT > lT)
+				rawData[a] |= (1 << b);
 		}
 	}
 
+	if ((uint8_t) (rawData[0] + rawData[1] + rawData[2] + rawData[3])
+			== rawData[4]) { //오류 검사
+		temp_Humi[1] = (float) (((uint16_t) rawData[0] << 8) | rawData[1])
+				* 0.1f;
+		if (!(rawData[2] & (1 << 7))) {
 
-	if((uint8_t)(rawData[0] + rawData[1] + rawData[2] + rawData[3]) == rawData[4]) {//오류 검사
-		temp_Humi[1] = (float)(((uint16_t)rawData[0]<<8) | rawData[1])*0.1f;
-		if(!(rawData[2] & (1<<7))) {
-
-			temp_Humi[0] = (float)(((uint16_t)rawData[2]<<8) | rawData[3])*0.1f;
-		}	else {
-			rawData[2] &= ~(1<<7);
-			temp_Humi[0] = (float)(((uint16_t)rawData[2]<<8) | rawData[3])*-0.1f;
+			temp_Humi[0] = (float) (((uint16_t) rawData[2] << 8) | rawData[3])
+					* 0.1f;
+		} else {
+			rawData[2] &= ~(1 << 7);
+			temp_Humi[0] = (float) (((uint16_t) rawData[2] << 8) | rawData[3])
+					* -0.1f;
 		}
 	}
-	return 0;// 정상 종료
+	return 0; // 정상 종료
 }
 
 
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)//GPIO 인터럽트 콜백
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) //GPIO 인터럽트 콜백
 {
 
-	if (GPIO_Pin == 8192) {	//버튼 눌르면 1분 올리기
+	if (GPIO_Pin == 0x2000) {	//버튼 눌르면 1분 올리기
 
 		int gap =
 				Loop_Count < Old_Loop_Count ?
 						Old_Loop_Count - Loop_Count :
 						Loop_Count - Old_Loop_Count;
 
-		if (gap > 250) {
+		if (gap > 150) {
 			Seg_Out++;
 
 		}
 		Old_Loop_Count = Loop_Count;
 	}
 
-	else if(GPIO_Pin == 16384){
+	else if (GPIO_Pin == 0x4000) {
 
 		int gap =
 				Loop_Count < Old_Loop_Count ?
 						Old_Loop_Count - Loop_Count :
 						Loop_Count - Old_Loop_Count;
 
-		if (gap > 250) {
+		if (gap > 150) {
 			Seg_Out = Seg_Out + 100; //1시간 올리기
 
 		}
 		Old_Loop_Count = Loop_Count;
 
-
 	}
 
-
-
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(GPIO_Pin);
-  /* NOTE: This function Should not be modified, when the callback is needed,
-           the HAL_GPIO_EXTI_Callback could be implemented in the user file
-   */
+	/* Prevent unused argument(s) compilation warning */
+	UNUSED(GPIO_Pin);
+	/* NOTE: This function Should not be modified, when the callback is needed,
+	 the HAL_GPIO_EXTI_Callback could be implemented in the user file
+	 */
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 
-	if(huart->Instance == USART6){
-//		char DF9 = rx6_data[11];
-//		char DF10 = rx6_data[12];
-		char DF11 = rx6_data[13];
-		char DF12 = rx6_data[14];
-		dust = (DF11 << 8)+DF12;
-		HAL_UART_Receive_IT(&huart6, &rx6_data, 56);
+	if (huart->Instance == USART6) {
+		if (rx6_data[0] == 0x16) {
+			char DF9 = rx6_data[11];
+			char DF10 = rx6_data[12];
+			char DF11 = rx6_data[13];
+			char DF12 = rx6_data[14];
+			dust = (DF9 << 24) + (DF10 << 16) + (DF11 << 8) + DF12;
+			HAL_UART_Receive_IT(&huart6, (uint8_t*) rx6_data, 56);
 
-
+		}
 
 	}
-
-
 
 }
 
@@ -384,7 +377,7 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart6, &rx6_data, 56);
+  HAL_UART_Receive_IT(&huart6, (uint8_t*)rx6_data, 56);//Uart6 리시브 인터럽트 활성화
   HAL_TIM_Base_Start_IT(&htim10);//타이머 10 시작 1ms
   HAL_TIM_Base_Start_IT(&htim11);//타이머 11 시작 1s
   if(lcd16x2_i2c_init(&hi2c1)){//LCD init 하기
@@ -408,69 +401,57 @@ int main(void)
 //	  HAL_UART_Transmit(&huart2, &a, 1, 10);
 
 
-	  if (ms > 1){
-	  	  		  Segment();//1ms마다 세븐세그먼트를 출력
-	  	  		  ms = 0;
-	  }
+		if (ms > 1) {
+			Segment(); //1ms마다 세븐세그먼트를 출력
+			ms = 0;
+		}
 
-	  if (rising_time < falling_time && falling_time < rerising_time){
-		  check_CO2();
-	  }
+		if (rising_time < falling_time && falling_time < rerising_time) {//Co2 측정
+			check_CO2();
+		}
 
+		if (Dust_time > 2) {//미세먼지 측정
+			check_Dust();
+			Dust_time = 0;
+		}
 
+		if (DHT22_Loop_Time > 5 || DHT22_Loop_Time == -1) //5초마다 온도 측정 스타트 비트 실행하고 진행
+				{
+			if (DHT22_Stat_Check == 0) {
+				DHT_Startbit();
+				DHT22_Elapsed_Time = 0;
+				DHT22_Stat_Check = 1;
+			}
+		}
 
+		if (DHT22_Stat_Check && DHT22_Elapsed_Time > 17) //스타트 비트 출력 17ms 이상 경과한경우 읽기 시작
+				{
+			char DHT_Return = DHT_getData();
+			if (DHT_Return == 1) { //타임아웃 리턴받은경우 다음 루프때 다시 측정하기
+				DHT22_Loop_Time = -1;
+			}
+			DHT22_Stat_Check = 0;
+			DHT22_Loop_Time = 0;
+		}
 
-	  if (Dust_time > 2){
-		  check_Dust();
-		  Dust_time = 0;
-	  }
+		if (lcd > 5 || lcd == -1) {//10초마다 LCD 출력
+			sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], dust);
+			sprintf(Line2, "H: %2.1f  C: %d", temp_Humi[1], C);
+			lcd16x2_i2c_clear();
+			lcd16x2_i2c_setCursor(0, 0);
+			lcd16x2_i2c_printf(Line1);
+			lcd16x2_i2c_setCursor(1, 0);
+			lcd16x2_i2c_printf(Line2);
+			lcd = 0;
+		}
 
-
-
-
-
-
-	  if (DHT22_Loop_Time >  5|| DHT22_Loop_Time == -1)//5초마다 온도 측정 스타트 비트 실행하고 진행
-	  {
-		  if (DHT22_Stat_Check == 0){
-			  DHT_Startbit();
-			  DHT22_Elapsed_Time = 0;
-			  DHT22_Stat_Check = 1;
-		  }
-	  }
-
-	  if (DHT22_Stat_Check && DHT22_Elapsed_Time > 17)//스타트 비트 출력 17ms 이상 경과한경우 읽기 시작
-	  {
-		  char DHT_Return = DHT_getData();
-		  if (DHT_Return == 1){//타임아웃 리턴받은경우 다음 루프때 다시 측정하기
-			  DHT22_Loop_Time = -1;
-		  }
-		  DHT22_Stat_Check = 0;
-		  DHT22_Loop_Time = 0;
-	  }
-
-
-
-
-	  if (lcd > 10 || lcd == -1){
-
-		  sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], dust);
-		  sprintf(Line2, "H: %2.1f  C: %d", temp_Humi[1], C);
-		  lcd16x2_i2c_clear();
-		  lcd16x2_i2c_setCursor(0,0);
-		  lcd16x2_i2c_printf(Line1);
-		  lcd16x2_i2c_setCursor(1,0);
-		  lcd16x2_i2c_printf(Line2);
-		  lcd = 0;
-	  }
-
-
-	  if(Uart_Loop_Time >= 10){
-		char msg[40];
-		sprintf(msg, "W:%d,T:%2.1f,H:%2.1f,D:%d,C:%d\n", Seg_Out, temp_Humi[0], temp_Humi[1],dust,C);
-		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), 0xFF);
-		Uart_Loop_Time = 0;
-	  }
+		if (Uart_Loop_Time >= 10) {//10초마다 Uart 라즈베리파이로 전송
+			char msg[40];
+			sprintf(msg, "W:%d,T:%2.1f,H:%2.1f,D:%d,C:%d\n", Seg_Out,
+					temp_Humi[0], temp_Humi[1], dust, C);
+			HAL_UART_Transmit(&huart2, (uint8_t*) msg, strlen(msg), 0xFF);
+			Uart_Loop_Time = 0;
+		}
 
 
 
