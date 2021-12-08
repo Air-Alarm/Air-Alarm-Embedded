@@ -144,7 +144,7 @@ void Segment() { //세그먼트 숫자 출력
 	Seg_Off(); // 모든 세그먼트 끄기
 
 	if (Seg_Out % 100 == 60) { //60분, 24시간 카운트
-		Seg_Out = Seg_Out + 40;
+		Seg_Out += 40;
 	} else if (Seg_Out >= 2400) {
 		Seg_Out = 0;
 	}
