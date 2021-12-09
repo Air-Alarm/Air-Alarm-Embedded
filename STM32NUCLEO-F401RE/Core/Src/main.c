@@ -105,7 +105,6 @@ int dust = 0;
 char Dust_time = 0;
 
 //디버그, 개발용 변수
-//int checkms = 0;//메인 루프 시간 측정용
 uint32_t Old_Loop_Count = 0;
 uint32_t Loop_Count;
 
@@ -396,9 +395,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  unsigned char a = '2';
-//
-//	  HAL_UART_Transmit(&huart2, &a, 1, 10);
 
 
 		if (ms > 1) {
