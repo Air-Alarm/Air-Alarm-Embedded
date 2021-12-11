@@ -406,10 +406,13 @@ int main(void)
 			check_CO2();
 		}
 
-		if (Dust_time > 2) {//미세먼지 측정
+		if (Dust_time > 4) {//미세먼지 측정
 			check_Dust();
 			Dust_time = 0;
 		}
+
+
+
 
 		if (DHT22_Loop_Time > 5 || DHT22_Loop_Time == -1) //5초마다 온도 측정 스타트 비트 실행하고 진행
 				{
@@ -430,6 +433,9 @@ int main(void)
 			DHT22_Loop_Time = 0;
 		}
 
+
+
+
 		if (lcd > 5 || lcd == -1) {//10초마다 LCD 출력
 			sprintf(Line1, "T: %2.1f  D: %d", temp_Humi[0], dust);
 			sprintf(Line2, "H: %2.1f  C: %d", temp_Humi[1], C);
@@ -448,9 +454,6 @@ int main(void)
 			HAL_UART_Transmit(&huart2, (uint8_t*) msg, strlen(msg), 0xFF);
 			Uart_Loop_Time = 0;
 		}
-
-
-
 
 
 
